@@ -5,47 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/ApplicationConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/SecurityConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/Enum/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserRegisterDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/checksums.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/md5-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/checksums/sha1-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/dependencies-accessors/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.10.2/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/model/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Company.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/BackRecoletoApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/BackRecoletoApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/model/Account.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/model/Address.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/model/Company.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/model/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +210,7 @@
       <workItem from="1732154371375" duration="3040000" />
       <workItem from="1732417066361" duration="4633000" />
       <workItem from="1732555920475" duration="355000" />
-      <workItem from="1732901722555" duration="14150000" />
+      <workItem from="1732901722555" duration="15185000" />
     </task>
     <servers />
   </component>
