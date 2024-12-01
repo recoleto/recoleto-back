@@ -31,11 +31,7 @@ public class AuthController {
 
     @PostMapping("/user/login")
     public ResponseEntity<LoginResponseDTO> userLogin (@RequestBody LoginDTO input){
-        User user = authService.authenticate(input);
-        String token = jwtService.generateToken(user);
-        LoginResponseDTO response = new LoginResponseDTO();
-        response.setToken(token);
-        response.setExpiresIn(jwtService.getExpirationTime());
+        LoginResponseDTO response = authService.authenticate(input);
         return ResponseEntity.status(200).body(response);
     }
 }

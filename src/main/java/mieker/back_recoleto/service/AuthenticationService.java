@@ -2,6 +2,7 @@ package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.entity.Enum.Role;
 import mieker.back_recoleto.entity.dto.LoginDTO;
+import mieker.back_recoleto.entity.dto.LoginResponseDTO;
 import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.repository.UserRepository;
@@ -18,11 +19,13 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public String signUp (UserRegisterDTO input) throws LoginException {
@@ -48,7 +51,7 @@ public class AuthenticationService {
         return "Usuário cadastrado com sucesso.";
     }
 
-    public User authenticate (LoginDTO input) {
+    public LoginResponseDTO authenticate (LoginDTO input) {
 
         User user = userRepository.findByEmail(input.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Email ou senha incorretos."));
@@ -68,6 +71,9 @@ public class AuthenticationService {
             };
         }
 
-        return userRepository.findByEmail(input.getEmail()).orElseThrow();
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+        loginResponseDTO.setToken(jwtService.generateToken(user));
+        loginResponseDTO.setExpiresIn(jwtService.getExpirationTime());
+        return loginResponseDTO;
     }
 }

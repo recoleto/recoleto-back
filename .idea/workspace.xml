@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +206,7 @@
       <workItem from="1732154371375" duration="3040000" />
       <workItem from="1732417066361" duration="4633000" />
       <workItem from="1732555920475" duration="355000" />
-      <workItem from="1732901722555" duration="15185000" />
+      <workItem from="1732901722555" duration="15659000" />
     </task>
     <servers />
   </component>
