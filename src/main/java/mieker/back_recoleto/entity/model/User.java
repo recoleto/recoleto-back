@@ -21,46 +21,12 @@ import java.util.List;
 @AttributeOverride(name = "phone", column = @Column(name = "user_phone"))
 @AttributeOverride(name = "createdAt", column = @Column(name = "user_created_at"))
 @AttributeOverride(name = "status", column = @Column(name = "user_status"))
-public class User extends Account implements UserDetails {
+@AttributeOverride(name = "role", column = @Column(name = "user_role", nullable = false))
+public class User extends Account {
     @Column(name = "user_name", nullable = false)
     private String name;
     @Column(name = "user_last_name", nullable = false)
     private String lastName;
     @Column(name = "user_cpf", nullable = false, unique = true)
     private String cpf;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", nullable = false)
-    private Role role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.toString());
-
-        return List.of(authority);
-    }
-
-    @Override
-    public String getUsername() {
-        return this.getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
