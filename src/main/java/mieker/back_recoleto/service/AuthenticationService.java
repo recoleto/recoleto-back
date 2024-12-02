@@ -7,6 +7,7 @@ import mieker.back_recoleto.entity.dto.LoginResponseDTO;
 import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.model.User;
+import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.CompanyRepository;
 import mieker.back_recoleto.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +36,7 @@ public class AuthenticationService {
 
     public String userSignUp (UserRegisterDTO input) throws LoginException {
 
-        if (userRepository.existsByEmail(input.getEmail())) {
+        if (userRepository.existsByEmail(input.getEmail()) || companyRepository.existsByEmail(input.getEmail())) {
             throw new LoginException("Email já cadastrado.");
         }
 
@@ -56,13 +57,22 @@ public class AuthenticationService {
         return "Usuário cadastrado com sucesso.";
     }
 
-    public LoginResponseDTO authenticate (LoginDTO input) {
+    public LoginResponseDTO authenticate (LoginDTO input, String actor) {
+        User user = new User();
+        Company company = new Company();
 
-        User user = userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new BadCredentialsException("Email ou senha incorretos."));
+        if (actor.equals("user")) {
+            user = userRepository.findByEmail(input.getEmail())
+                .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
+        }  else if (actor.equals("company")) {
+            System.out.println(actor);
+            company = companyRepository.findByEmail(input.getEmail())
+                .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
+        }
 
         try {
             // Authenticate the user
+            System.out.println("teste");
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             input.getEmail(),
@@ -71,19 +81,24 @@ public class AuthenticationService {
             );
         } catch (BadCredentialsException e) {
             // Handle invalid email or password
-            throw new BadCredentialsException("Email ou senha incorretos.") {
+            throw new NotFoundException("Email ouuu senha incorretos.") {
                 // This is a custom exception with a message for invalid credentials
             };
         }
 
+        System.out.println("here?");
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-        loginResponseDTO.setToken(jwtService.generateToken(user));
+        if (actor.equals("user")) {
+            loginResponseDTO.setToken(jwtService.generateToken(user));
+        } else if (actor.equals("company")) {
+            loginResponseDTO.setToken(jwtService.generateToken(company));
+        }
         loginResponseDTO.setExpiresIn(jwtService.getExpirationTime());
         return loginResponseDTO;
     }
 
     public String companySignUp(CompanyRegisterDTO input) throws LoginException {
-        if (companyRepository.existsByEmail(input.getEmail())) {
+        if (companyRepository.existsByEmail(input.getEmail()) || userRepository.existsByEmail(input.getEmail())) {
             throw new LoginException("Email já cadastrado.");
         }
 
@@ -97,7 +112,7 @@ public class AuthenticationService {
         company.setCnpj(input.getCnpj());
         company.setPhone(input.getPhone());
         company.setPassword(passwordEncoder.encode(input.getPassword()));
-        company.setRole(Role.USUARIO);
+        company.setRole(Role.EMPRESA);
         companyRepository.save(company);
 
         return "Empresa cadastrada com sucesso.";

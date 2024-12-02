@@ -42,7 +42,7 @@ public class Account implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.getEmail();
+        return email;
     }
 
     @Override

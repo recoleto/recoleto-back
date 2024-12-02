@@ -4,7 +4,6 @@ import mieker.back_recoleto.entity.dto.CompanyRegisterDTO;
 import mieker.back_recoleto.entity.dto.LoginDTO;
 import mieker.back_recoleto.entity.dto.LoginResponseDTO;
 import mieker.back_recoleto.entity.dto.UserRegisterDTO;
-import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.service.AuthenticationService;
 import mieker.back_recoleto.service.JwtService;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +15,9 @@ import javax.security.auth.login.LoginException;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final JwtService jwtService;
     private final AuthenticationService authService;
 
-    public AuthController(JwtService jwtService, AuthenticationService authService) throws LoginException {
-        this.jwtService = jwtService;
+    public AuthController(AuthenticationService authService) throws LoginException {
         this.authService = authService;
     }
 
@@ -37,8 +34,17 @@ public class AuthController {
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<LoginResponseDTO> userLogin (@RequestBody LoginDTO input){
-        LoginResponseDTO response = authService.authenticate(input);
+    public ResponseEntity<LoginResponseDTO> userLogin (@RequestBody LoginDTO input) {
+        String actor = "user";
+        LoginResponseDTO response = authService.authenticate(input, actor);
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @PostMapping("/company/login")
+    public ResponseEntity<LoginResponseDTO> companyLogin (@RequestBody LoginDTO input) {
+        String actor = "company";
+        System.out.println(input.getEmail());
+        LoginResponseDTO response = authService.authenticate(input, actor);
         return ResponseEntity.status(200).body(response);
     }
 }
