@@ -19,13 +19,9 @@ import java.util.Optional;
 
 @Configuration
 public class ApplicationConfiguration {
-    private final UserRepository userRepository;
-    private final CompanyRepository companyRepository;
     private final AccountRepository[] accountRepositories;
 
-    public ApplicationConfiguration(UserRepository userRepository, CompanyRepository companyRepository, AccountRepository[] accountRepositories) {
-        this.userRepository = userRepository;
-        this.companyRepository = companyRepository;
+    public ApplicationConfiguration(AccountRepository[] accountRepositories) {
         this.accountRepositories = accountRepositories;
     }
 
