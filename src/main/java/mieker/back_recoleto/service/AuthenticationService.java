@@ -81,7 +81,7 @@ public class AuthenticationService {
             );
         } catch (BadCredentialsException e) {
             // Handle invalid email or password
-            throw new NotFoundException("Email ouuu senha incorretos.") {
+            throw new NotFoundException("Email ou senha incorretos.") {
                 // This is a custom exception with a message for invalid credentials
             };
         }
