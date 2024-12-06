@@ -33,18 +33,10 @@ public class AuthController {
         return ResponseEntity.status(201).body(message);
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> userLogin (@RequestBody LoginDTO input) {
-        String actor = "user";
-        LoginResponseDTO response = authService.authenticate(input, actor);
+        LoginResponseDTO response = authService.authenticate(input);
         return ResponseEntity.status(200).body(response);
     }
 
-    @PostMapping("/company/login")
-    public ResponseEntity<LoginResponseDTO> companyLogin (@RequestBody LoginDTO input) {
-        String actor = "company";
-        System.out.println(input.getEmail());
-        LoginResponseDTO response = authService.authenticate(input, actor);
-        return ResponseEntity.status(200).body(response);
-    }
 }

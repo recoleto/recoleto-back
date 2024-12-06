@@ -57,22 +57,22 @@ public class AuthenticationService {
         return "Usuário cadastrado com sucesso.";
     }
 
-    public LoginResponseDTO authenticate (LoginDTO input, String actor) {
+    public LoginResponseDTO authenticate (LoginDTO input) {
         User user = new User();
         Company company = new Company();
 
-        if (actor.equals("user")) {
+        if (userRepository.existsByEmail(input.getEmail())) {
             user = userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
-        }  else if (actor.equals("company")) {
-            System.out.println(actor);
+                    .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
+            System.out.println(user.getRole());
+        } else if (companyRepository.existsByEmail(input.getEmail())) {
             company = companyRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
+                    .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
+            System.out.println(company.getRole());
         }
 
         try {
             // Authenticate the user
-            System.out.println("teste");
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             input.getEmail(),
@@ -81,16 +81,15 @@ public class AuthenticationService {
             );
         } catch (BadCredentialsException e) {
             // Handle invalid email or password
-            throw new NotFoundException("Email ouuu senha incorretos.") {
+            throw new NotFoundException("Email ou senha incorretos.") {
                 // This is a custom exception with a message for invalid credentials
             };
         }
 
-        System.out.println("here?");
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-        if (actor.equals("user")) {
+        if (userRepository.existsByEmail(input.getEmail())) {
             loginResponseDTO.setToken(jwtService.generateToken(user));
-        } else if (actor.equals("company")) {
+        } else if (companyRepository.existsByEmail(input.getEmail())) {
             loginResponseDTO.setToken(jwtService.generateToken(company));
         }
         loginResponseDTO.setExpiresIn(jwtService.getExpirationTime());
