@@ -5,7 +5,6 @@ import mieker.back_recoleto.entity.dto.LoginDTO;
 import mieker.back_recoleto.entity.dto.LoginResponseDTO;
 import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.service.AuthenticationService;
-import mieker.back_recoleto.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
