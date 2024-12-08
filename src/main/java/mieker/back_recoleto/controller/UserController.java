@@ -2,13 +2,10 @@ package mieker.back_recoleto.controller;
 
 import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
-import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.LoginException;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +21,7 @@ public class UserController {
 
 //    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> userRegister () {
+    public ResponseEntity<UserDTO> getUser () {
         return ResponseEntity.status(200).body(userService.getUser(null));
     }
 

@@ -5,23 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateUserDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/NoResourceFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/CompanyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/CompanyDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateCompanyDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/CompanyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/ApplicationConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/ApplicationConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/NoResourceFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/CompanyRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/ApplicationConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/ApplicationConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/exception/GlobalHandlerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/exception/GlobalHandlerException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/CompanyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/CompanyRepository.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
