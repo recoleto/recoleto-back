@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/CompanyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/CompanyDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateCompanyDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/CompanyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/ApplicationConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/config/ApplicationConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/NoResourceFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/CompanyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/ApplicationConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/ApplicationConfiguration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/exception/GlobalHandlerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/exception/GlobalHandlerException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/CompanyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/CompanyRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +52,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Shell Script.mvnw.executor": "Run",
     "Spring Boot.BackRecoletoApplication.executor": "Run",
-    "git-widget-placeholder": "3-feat-crud-usuário-e-empresa",
+    "git-widget-placeholder": "7-feat-swagger",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/gabriela/Área de trabalho/tads/proj-integ/recoleto-back",
     "node.js.detected.package.eslint": "true",
