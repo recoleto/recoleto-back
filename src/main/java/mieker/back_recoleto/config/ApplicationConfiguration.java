@@ -1,14 +1,18 @@
 package mieker.back_recoleto.config;
 
+import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.repository.AccountRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
 import mieker.back_recoleto.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Configuration
 public class ApplicationConfiguration {
@@ -58,4 +63,16 @@ public class ApplicationConfiguration {
 
         return authProvider;
     }
+
+    public UUID userAuthenticator() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+        return currentUser.getId();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
 }
