@@ -10,6 +10,10 @@ public class UserRegisterDTO {
     private String password;
     private String phone;
     private String cpf;
+    private String cep;
+    private String street;
+    private String number;
+
 //    private String cep;
 //    private String street;
 //    private String number;

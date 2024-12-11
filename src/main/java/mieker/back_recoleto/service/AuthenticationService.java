@@ -5,11 +5,14 @@ import mieker.back_recoleto.entity.dto.CompanyRegisterDTO;
 import mieker.back_recoleto.entity.dto.LoginDTO;
 import mieker.back_recoleto.entity.dto.LoginResponseDTO;
 import mieker.back_recoleto.entity.dto.UserRegisterDTO;
+import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.exception.NotFoundException;
+import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
 import mieker.back_recoleto.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,23 +28,29 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final AddressRepository addressRepository;
+    private final AddressService addressService;
 
-    public AuthenticationService(UserRepository userRepository, CompanyRepository companyRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
+    public AuthenticationService(UserRepository userRepository, CompanyRepository companyRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, AddressRepository addressRepository, AddressService addressService) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.addressRepository = addressRepository;
+        this.addressService = addressService;
     }
 
     public String userSignUp (UserRegisterDTO input) throws LoginException {
 
         if (userRepository.existsByEmail(input.getEmail()) || companyRepository.existsByEmail(input.getEmail())) {
-            throw new LoginException("Email já cadastrado.");
+            throw new LoginException(addressService.getAddress(input.getCep(), input.getNumber()));
+
+//            throw new DataIntegrityViolationException("Email já cadastrado.");
         }
 
         if (userRepository.existsByCpf(input.getCpf())) {
-            throw new LoginException("CPF já cadastrado.");
+            throw new DataIntegrityViolationException("CPF já cadastrado.");
         }
 
         User user = new User();
@@ -52,6 +61,17 @@ public class AuthenticationService {
         user.setPhone(input.getPhone());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setRole(Role.USUARIO);
+
+        Address address = new Address();
+        address.setRole(Role.USUARIO);
+        address.setCep(input.getCep());
+        address.setNumber(input.getNumber());
+        address.setStreet(input.getStreet());
+//        address.setLongitude(addressService.getAddress(input.getCep()));
+        addressRepository.save(address);
+
+        user.setAddress(address);
+
         userRepository.save(user);
 
         return "Usuário cadastrado com sucesso.";

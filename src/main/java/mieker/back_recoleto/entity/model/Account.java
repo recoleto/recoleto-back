@@ -31,7 +31,9 @@ public class Account implements UserDetails {
     private Boolean status;
     @Enumerated(EnumType.STRING)
     private Role role;
-//    private Address address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
