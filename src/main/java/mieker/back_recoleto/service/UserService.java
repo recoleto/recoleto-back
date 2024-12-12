@@ -55,13 +55,13 @@ public class UserService {
         UUID userId = this.getUserId();
         User user = userRepository.findUserById(userId);
         user.setName(input.getName());
-        user.setPhone(input.getPhone());
-        user.setLastName(input.getLastName());
-        if (userRepository.existsByEmail(input.getEmail())) {
-            throw new DataIntegrityViolationException("Email já cadastrado.");
-        }
-        user.setEmail(input.getEmail());
-        user.setPassword(passwordEncoder.encode(input.getPassword()));
+//        user.setPhone(input.getPhone());
+//        user.setLastName(input.getLastName());
+//        if (userRepository.existsByEmail(input.getEmail())) {
+//            throw new DataIntegrityViolationException("Email já cadastrado.");
+//        }
+//        user.setEmail(input.getEmail());
+//        user.setPassword(passwordEncoder.encode(input.getPassword()));
         userRepository.save(user);
         return this.modelMapper.map(user, UserDTO.class);
     }

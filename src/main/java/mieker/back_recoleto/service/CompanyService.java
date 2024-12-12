@@ -53,12 +53,11 @@ public class CompanyService {
 
     public CompanyDTO updateCompany(UpdateCompanyDTO input) {
         UUID userId = this.getUserId();
-        appConfig.emailValidator(input.getEmail());
         Company company = companyRepository.findCompanyById(userId);
         company.setName(input.getName());
-        company.setPhone(input.getPhone());
-        company.setEmail(input.getEmail());
-        company.setPassword(passwordEncoder.encode(input.getPassword()));
+//        company.setPhone(input.getPhone());
+//        company.setEmail(input.getEmail());
+//        company.setPassword(passwordEncoder.encode(input.getPassword()));
         companyRepository.save(company);
         return modelMapper.map(company, CompanyDTO.class);
     }

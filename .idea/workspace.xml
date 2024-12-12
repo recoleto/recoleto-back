@@ -5,14 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateCompanyDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateCompanyDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UpdateUserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/CompanyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/CompanyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/ApplicationConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/JwtAuthenticationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/config/SecurityConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/CompanyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UpdateCompanyDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UpdateCompanyDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UpdateUserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UpdateUserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/AccountRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/CompanyRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/UserRepository.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/CompanyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/CompanyService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,18 +51,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "gabrielamarqs"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;gabrielamarqs&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:recoleto/recoleto-back.git",
-    "accountId": "3f0de332-2749-4015-8a69-2c50e0ea590d"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:recoleto/recoleto-back.git&quot;,
+    &quot;accountId&quot;: &quot;3f0de332-2749-4015-8a69-2c50e0ea590d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -70,7 +85,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Shell Script.mvnw.executor": "Run",
     "Spring Boot.BackRecoletoApplication.executor": "Run",
-    "git-widget-placeholder": "10-fix-rota-autenticada",
+    "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/gabriela/Área de trabalho/tads/proj-integ/recoleto-back",
     "node.js.detected.package.eslint": "true",

@@ -8,6 +8,6 @@ import java.util.Date;
 public class UpdateCompanyDTO {
     private String name;
     private String email;
-    private String phone;
-    private String password;
+//    private String phone;
+//    private String password;
 }
