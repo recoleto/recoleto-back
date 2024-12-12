@@ -1,5 +1,6 @@
 package mieker.back_recoleto.service;
 
+import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.Role;
 import mieker.back_recoleto.entity.dto.CompanyRegisterDTO;
 import mieker.back_recoleto.entity.dto.LoginDTO;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import java.util.UUID;
 
 @Service
 public class AuthenticationService {
@@ -25,13 +27,15 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final ApplicationConfiguration appConfig;
 
-    public AuthenticationService(UserRepository userRepository, CompanyRepository companyRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
+    public AuthenticationService(UserRepository userRepository, CompanyRepository companyRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService, ApplicationConfiguration appConfig) {
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.appConfig = appConfig;
     }
 
     public String userSignUp (UserRegisterDTO input) throws LoginException {
@@ -89,8 +93,10 @@ public class AuthenticationService {
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
         if (userRepository.existsByEmail(input.getEmail())) {
             loginResponseDTO.setToken(jwtService.generateToken(user));
+            loginResponseDTO.setRole(user.getRole());
         } else if (companyRepository.existsByEmail(input.getEmail())) {
             loginResponseDTO.setToken(jwtService.generateToken(company));
+            loginResponseDTO.setRole(company.getRole());
         }
         loginResponseDTO.setExpiresIn(jwtService.getExpirationTime());
         return loginResponseDTO;
