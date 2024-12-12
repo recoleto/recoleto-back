@@ -109,8 +109,10 @@ public class AuthenticationService {
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
         if (userRepository.existsByEmail(input.getEmail())) {
             loginResponseDTO.setToken(jwtService.generateToken(user));
+            loginResponseDTO.setRole(user.getRole());
         } else if (companyRepository.existsByEmail(input.getEmail())) {
             loginResponseDTO.setToken(jwtService.generateToken(company));
+            loginResponseDTO.setRole(company.getRole());
         }
         loginResponseDTO.setExpiresIn(jwtService.getExpirationTime());
         return loginResponseDTO;

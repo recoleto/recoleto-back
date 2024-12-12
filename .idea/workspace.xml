@@ -4,24 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/response/ResponseGeoCodeAPI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/response/ResponseViaCepAPI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/AddressRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AddressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserRegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserRegisterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UserRegisterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UserRegisterDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/model/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/model/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/model/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/model/Address.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService.class" afterDir="false" />
+    <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/LoginResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/LoginResponseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/LoginResponseDTO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,35 +39,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BackRecoletoApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Recoleto.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Shell Script.mvnw.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.BackRecoletoApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;8-feat-fazer-o-crud-do-endereço&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/gabriela/Área de trabalho/tads/proj-integ/recoleto-back&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BackRecoletoApplication.executor": "Run",
+    "Maven.Recoleto.executor": "Run",
+    "Maven.Unnamed.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Shell Script.mvnw.executor": "Run",
+    "Spring Boot.BackRecoletoApplication.executor": "Run",
+    "git-widget-placeholder": "Merging 8-feat-fazer-o-crud-do-endereço",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/gabriela/Área de trabalho/tads/proj-integ/recoleto-back",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -234,6 +220,15 @@
       <workItem from="1732901722555" duration="23045000" />
       <workItem from="1733142698215" duration="9974000" />
     </task>
+    <task id="LOCAL-00001" summary="test">
+      <option name="closed" value="true" />
+      <created>1734016469311</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734016469311</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,6 +256,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
