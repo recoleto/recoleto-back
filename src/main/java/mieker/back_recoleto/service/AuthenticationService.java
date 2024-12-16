@@ -59,6 +59,7 @@ public class AuthenticationService {
         user.setEmail(input.getEmail());
         user.setCpf(input.getCpf());
         user.setPhone(input.getPhone());
+        user.setStatus(true);
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setRole(Role.USUARIO);
 
@@ -82,10 +83,18 @@ public class AuthenticationService {
         Company company = new Company();
 
         if (userRepository.existsByEmail(input.getEmail())) {
+            user = userRepository.findUserByEmail(input.getEmail());
+            if (!user.getStatus()) {
+                throw new NotFoundException("Usuário desativado.");
+            }
             user = userRepository.findByEmail(input.getEmail())
                     .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
             System.out.println(user.getRole());
         } else if (companyRepository.existsByEmail(input.getEmail())) {
+            company = companyRepository.findUserByEmail(input.getEmail());
+            if (!company.getStatus()) {
+                throw new NotFoundException("Empresa desativada.");
+            }
             company = companyRepository.findByEmail(input.getEmail())
                     .orElseThrow(() -> new NotFoundException("Email ou senha incorretos."));
             System.out.println(company.getRole());
@@ -132,6 +141,7 @@ public class AuthenticationService {
         company.setEmail(input.getEmail());
         company.setCnpj(input.getCnpj());
         company.setPhone(input.getPhone());
+        company.setStatus(true);
         company.setPassword(passwordEncoder.encode(input.getPassword()));
         company.setRole(Role.EMPRESA);
         companyRepository.save(company);
