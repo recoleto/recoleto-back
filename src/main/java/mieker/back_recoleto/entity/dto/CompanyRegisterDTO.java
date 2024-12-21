@@ -9,4 +9,7 @@ public class CompanyRegisterDTO {
     private String cnpj;
     private String password;
     private String phone;
+    private String cep;
+    private String street;
+    private String number;
 }

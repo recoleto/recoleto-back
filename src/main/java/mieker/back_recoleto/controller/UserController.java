@@ -4,6 +4,8 @@ import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
 import mieker.back_recoleto.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
+@PreAuthorize("hasAuthority('USUARIO')")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -19,14 +22,15 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @PreAuthorize("hasRole('ROLE_USUARIO')")
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getUser () {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return ResponseEntity.status(200).body(userService.getUser(null));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById (@PathVariable UUID id) {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return ResponseEntity.status(200).body(userService.getUser(id));
     }
 

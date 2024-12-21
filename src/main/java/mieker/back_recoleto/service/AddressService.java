@@ -2,6 +2,7 @@ package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
 import mieker.back_recoleto.entity.response.ResponseViaCepAPI;
+import mieker.back_recoleto.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,7 +19,7 @@ public class AddressService {
     @Value("${api-key}")
     private String apiKey;
 
-    private String turnStreetToGeocode(String cep, String num) {
+    private ResponseGeoCodeAPI turnStreetToGeocode(String cep, String num) {
         ResponseViaCepAPI cepAPI = this.turnCepToStreet(cep);
 //        String urlGeocode = URLEncoder.encode(street + ", " + num, StandardCharsets.UTF_8);
         String urlGeocode = "?street=";
@@ -32,13 +33,16 @@ public class AddressService {
 
         List<ResponseGeoCodeAPI> response = this.fetchGeocodeDataFromGeoCode(urlGeocode);
 
-        if (response != null && !response.isEmpty()) {
+        if (!response.isEmpty()) {
             ResponseGeoCodeAPI firstResult = response.get(0); // Pega o primeiro resultado
             System.out.println("First Result: " + firstResult); // Debug
-            return firstResult.getLat() + ", " + firstResult.getLon(); // Retorna latitude e longitude
+            ResponseGeoCodeAPI responseGeoCodeAPI = new ResponseGeoCodeAPI();
+            responseGeoCodeAPI.setLat(firstResult.getLat());
+            responseGeoCodeAPI.setLon(firstResult.getLon());
+            return responseGeoCodeAPI; // Retorna latitude e longitude
         } else {
             System.out.println("No results found.");
-            return "não existe";
+            throw new NotFoundException("Nenhum resultado encontrado");
         }
     }
 
@@ -99,8 +103,9 @@ public class AddressService {
                 .block();
     }
 
-    public String getAddress(String cep, String num) {
+    public ResponseGeoCodeAPI getAddress(String cep, String num) {
         System.out.println(cep);
+//        this.turnStreetToGeocode(cep, num);
         return this.turnStreetToGeocode(cep, num);
     }
 }

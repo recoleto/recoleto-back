@@ -13,8 +13,4 @@ public class UserRegisterDTO {
     private String cep;
     private String street;
     private String number;
-
-//    private String cep;
-//    private String street;
-//    private String number;
 }

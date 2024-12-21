@@ -8,6 +8,7 @@ import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.model.User;
+import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
 import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
@@ -41,12 +42,11 @@ public class AuthenticationService {
         this.addressService = addressService;
     }
 
-    public String userSignUp (UserRegisterDTO input) throws LoginException {
+    public String userSignUp (UserRegisterDTO input) {
 
         if (userRepository.existsByEmail(input.getEmail()) || companyRepository.existsByEmail(input.getEmail())) {
-            throw new LoginException(addressService.getAddress(input.getCep(), input.getNumber()));
-
-//            throw new DataIntegrityViolationException("Email já cadastrado.");
+//            throw new LoginException(addressService.getAddress(input.getCep(), input.getNumber()));
+            throw new DataIntegrityViolationException("Email já cadastrado.");
         }
 
         if (userRepository.existsByCpf(input.getCpf())) {
@@ -64,11 +64,15 @@ public class AuthenticationService {
         user.setRole(Role.USUARIO);
 
         Address address = new Address();
-        address.setRole(Role.USUARIO);
         address.setCep(input.getCep());
         address.setNumber(input.getNumber());
         address.setStreet(input.getStreet());
 //        address.setLongitude(addressService.getAddress(input.getCep()));
+        if (input.getCep() != null || input.getNumber() != null) {
+            ResponseGeoCodeAPI responseGeoCodeAPI = addressService.getAddress(input.getCep(), input.getNumber());
+            address.setLatitude(responseGeoCodeAPI.getLat());
+            address.setLongitude(responseGeoCodeAPI.getLon());
+        }
         addressRepository.save(address);
 
         user.setAddress(address);
@@ -144,6 +148,20 @@ public class AuthenticationService {
         company.setStatus(true);
         company.setPassword(passwordEncoder.encode(input.getPassword()));
         company.setRole(Role.EMPRESA);
+
+        Address address = new Address();
+        address.setCep(input.getCep());
+        address.setNumber(input.getNumber());
+        address.setStreet(input.getStreet());
+//        address.setLongitude(addressService.getAddress(input.getCep()));
+        if (input.getCep() != null || input.getNumber() != null) {
+            ResponseGeoCodeAPI responseGeoCodeAPI = addressService.getAddress(input.getCep(), input.getNumber());
+            address.setLatitude(responseGeoCodeAPI.getLat());
+            address.setLongitude(responseGeoCodeAPI.getLon());
+        }
+        addressRepository.save(address);
+
+        company.setAddress(address);
         companyRepository.save(company);
 
         return "Empresa cadastrada com sucesso.";

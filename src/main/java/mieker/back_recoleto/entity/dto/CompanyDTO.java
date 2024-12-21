@@ -10,5 +10,8 @@ public class CompanyDTO {
     private String email;
     private String phone;
     private String cnpj;
+    private String cep;
+    private String street;
+    private String number;
     private Date createdAt;
 }

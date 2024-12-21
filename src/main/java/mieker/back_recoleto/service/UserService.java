@@ -3,15 +3,15 @@ package mieker.back_recoleto.service;
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
+import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.User;
+import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,14 +20,16 @@ public class UserService {
     private final ApplicationConfiguration appConfig;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AddressRepository addressRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public UserService(ApplicationConfiguration appConfig, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(ApplicationConfiguration appConfig, UserRepository userRepository, PasswordEncoder passwordEncoder, AddressRepository addressRepository) {
         this.appConfig = appConfig;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.addressRepository = addressRepository;
     }
 
     private UUID getUserId() {
@@ -40,13 +42,32 @@ public class UserService {
             userID = this.getUserId();
         }
         User user = userRepository.findUserById(userID);
-        return this.modelMapper.map(user, UserDTO.class);
+        Address address = addressRepository.findAddressById(user.getAddress().getId());
+
+        UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
+
+        if (address != null) {
+            userDTO.setStreet(address.getStreet());
+            userDTO.setNumber(address.getNumber());
+            userDTO.setCep(address.getCep());
+        }
+
+        return userDTO;
     }
 
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(user -> this.modelMapper.map(user, UserDTO.class))
+                .map(user ->
+                {
+                    UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+                    if (user.getAddress() != null) {
+                        userDTO.setCep(user.getAddress().getCep());
+                        userDTO.setStreet(user.getAddress().getStreet());
+                        userDTO.setNumber(user.getAddress().getNumber());
+                    }
+                    return userDTO;
+                })
                 .toList(); // Use `collect(Collectors.toList())` for older Java versions
     }
 

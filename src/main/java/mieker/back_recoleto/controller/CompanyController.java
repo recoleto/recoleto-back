@@ -6,6 +6,7 @@ import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
 import mieker.back_recoleto.service.CompanyService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
+@PreAuthorize("hasAuthority('EMPRESA')")
 @RequestMapping("/company")
 public class CompanyController {
     private final CompanyService companyService;
