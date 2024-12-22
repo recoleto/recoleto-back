@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
-@PreAuthorize("hasAuthority('EMPRESA')")
 @RequestMapping("/company")
 public class CompanyController {
     private final CompanyService companyService;
@@ -23,26 +22,31 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @GetMapping("/me")
     public ResponseEntity<CompanyDTO> getCompany () {
         return ResponseEntity.status(200).body(companyService.getCompany(null));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDTO> getCompanyById (@PathVariable UUID id) {
         return ResponseEntity.status(200).body(companyService.getCompany(id));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<CompanyDTO>> getAllCompany () {
         return ResponseEntity.status(200).body(companyService.getAll());
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @PutMapping("/update")
     public ResponseEntity<CompanyDTO> updateCompany (@RequestBody UpdateCompanyDTO input) {
         return ResponseEntity.status(200).body(companyService.updateCompany(input));
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @PutMapping("/disable")
     public ResponseEntity<String> disableCompany () {
         return ResponseEntity.status(200).body(companyService.disableCompany());

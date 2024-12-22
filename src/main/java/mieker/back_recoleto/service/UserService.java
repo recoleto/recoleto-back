@@ -41,15 +41,15 @@ public class UserService {
         if (userId == null) {
             userID = this.getUserId();
         }
+
         User user = userRepository.findUserById(userID);
-        Address address = addressRepository.findAddressById(user.getAddress().getId());
 
         UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
 
-        if (address != null) {
-            userDTO.setStreet(address.getStreet());
-            userDTO.setNumber(address.getNumber());
-            userDTO.setCep(address.getCep());
+        if (user.getAddress() != null) {
+            userDTO.setCep(user.getAddress().getCep());
+            userDTO.setStreet(user.getAddress().getStreet());
+            userDTO.setNumber(user.getAddress().getNumber());
         }
 
         return userDTO;

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
-@PreAuthorize("hasAuthority('USUARIO')")
+@PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -28,12 +28,14 @@ public class UserController {
         return ResponseEntity.status(200).body(userService.getUser(null));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById (@PathVariable UUID id) {
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return ResponseEntity.status(200).body(userService.getUser(id));
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getAllUsers () {
         return ResponseEntity.status(200).body(userService.getAllUsers());

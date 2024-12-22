@@ -43,13 +43,13 @@ public class CompanyService {
             companyId = this.getCompanyId();
         }
         Company company = companyRepository.findCompanyById(companyId);
-        Address address = addressRepository.findAddressById(company.getAddress().getId());
+
         CompanyDTO companyDTO = this.modelMapper.map(company, CompanyDTO.class);
 
-        if (address != null) {
-            companyDTO.setStreet(address.getStreet());
-            companyDTO.setNumber(address.getNumber());
-            companyDTO.setCep(address.getCep());
+        if (company.getAddress() != null) {
+            companyDTO.setStreet(company.getAddress().getStreet());
+            companyDTO.setNumber(company.getAddress().getNumber());
+            companyDTO.setCep(company.getAddress().getCep());
         }
 
         return companyDTO;
