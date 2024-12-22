@@ -5,28 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea1906f5-0ba0-441f-8fda-b928acce94a9" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/bootstrap/AdminSeeder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/CompanyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/CompanyDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/CompanyDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/CompanyRegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/CompanyRegisterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserRegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/dto/UserRegisterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/entity/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/AddressRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/repository/AddressRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AddressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/exception/GlobalHandlerException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/CompanyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mieker/back_recoleto/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/CompanyDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/CompanyDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/CompanyRegisterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/CompanyRegisterDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/dto/UserDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/model/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/entity/model/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/AddressRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/repository/AddressRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AddressService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AddressService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/AuthenticationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/exception/GlobalHandlerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/exception/GlobalHandlerException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/CompanyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/CompanyService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mieker/back_recoleto/service/UserService.class" afterDir="false" />
     </list>
@@ -86,7 +73,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Shell Script.mvnw.executor": "Run",
     "Spring Boot.BackRecoletoApplication.executor": "Run",
-    "git-widget-placeholder": "8-feat-fazer-o-crud-do-endereço",
+    "git-widget-placeholder": "14-feat-criar-usuário-admin",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/gabriela/Área de trabalho/tads/proj-integ/recoleto-back",
     "node.js.detected.package.eslint": "true",
