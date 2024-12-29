@@ -45,6 +45,12 @@ public class CollectionPointController {
         List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByCompanyId(companyId);
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }
+
+    @GetMapping("/{pointId}")
+    public ResponseEntity<CollectionPointDTO> getCollectionPointsById (@PathVariable UUID pointId) {
+        CollectionPointDTO collectionPointDTO = collectionPointService.getCollectionPointById(pointId);
+        return ResponseEntity.status(200).body(collectionPointDTO);
+    }
 }
 
 // get all collection points

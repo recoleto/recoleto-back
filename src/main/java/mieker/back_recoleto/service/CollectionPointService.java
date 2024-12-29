@@ -9,6 +9,7 @@ import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.CollectionPoint;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
+import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.CollectionPointRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -115,5 +117,25 @@ public class CollectionPointService {
                     return pointDTO;
                 })
                 .toList();
+    }
+
+    public CollectionPointDTO getCollectionPointById(UUID pointId) {
+        CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElse(null);
+        if (collectionPoint == null) {
+            throw new NotFoundException("Ponto de coleta não encontrado.");
+        }
+
+        CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
+
+        if (collectionPoint.getAddress() != null) {
+            pointDTO.setCep(collectionPoint.getAddress().getCep());
+            pointDTO.setStreet(collectionPoint.getAddress().getStreet());
+            pointDTO.setNumber(collectionPoint.getAddress().getNumber());
+        }
+
+        pointDTO.setPointUUID(collectionPoint.getId());
+        pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
+        pointDTO.setCompanyName(collectionPoint.getCompany().getName());
+        return pointDTO;
     }
 }
