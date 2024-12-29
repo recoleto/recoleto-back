@@ -1,6 +1,7 @@
 package mieker.back_recoleto.controller;
 
 
+import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.CollectionPointDTO;
 import mieker.back_recoleto.service.CollectionPointService;
@@ -51,10 +52,17 @@ public class CollectionPointController {
         CollectionPointDTO collectionPointDTO = collectionPointService.getCollectionPointById(pointId);
         return ResponseEntity.status(200).body(collectionPointDTO);
     }
+
+    @GetMapping("/usw/{usw}")
+    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByUSWType(@PathVariable UrbanSolidWaste usw) {
+        List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByUSW(usw);
+        return ResponseEntity.status(200).body(collectionPointDTOList);
+    }
 }
 
 // get all collection points
 // get all collection point by company
 // get collection point by id
+// get collection point by usw
 // update collection point
 // delete collection point

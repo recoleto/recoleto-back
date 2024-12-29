@@ -2,6 +2,7 @@ package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.Role;
+import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.CollectionPointDTO;
 import mieker.back_recoleto.entity.dto.CompanyDTO;
@@ -120,10 +121,7 @@ public class CollectionPointService {
     }
 
     public CollectionPointDTO getCollectionPointById(UUID pointId) {
-        CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElse(null);
-        if (collectionPoint == null) {
-            throw new NotFoundException("Ponto de coleta não encontrado.");
-        }
+        CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
 
         CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
 
@@ -137,5 +135,24 @@ public class CollectionPointService {
         pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
         pointDTO.setCompanyName(collectionPoint.getCompany().getName());
         return pointDTO;
+    }
+
+    public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWaste usw) {
+        return collectionPointRepository.findCollectionPointsByUrbanSolidWaste(usw)
+                .stream()
+                .map(collectionPoint ->
+                {
+                    CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
+                    if (collectionPoint.getAddress() != null) {
+                        pointDTO.setCep(collectionPoint.getAddress().getCep());
+                        pointDTO.setStreet(collectionPoint.getAddress().getStreet());
+                        pointDTO.setNumber(collectionPoint.getAddress().getNumber());
+                    }
+                    pointDTO.setPointUUID(collectionPoint.getId());
+                    pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
+                    pointDTO.setCompanyName(collectionPoint.getCompany().getName());
+                    return pointDTO;
+                })
+                .toList();
     }
 }
