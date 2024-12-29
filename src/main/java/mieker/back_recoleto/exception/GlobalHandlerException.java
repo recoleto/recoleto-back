@@ -94,6 +94,8 @@ public class GlobalHandlerException extends Throwable {
             return errorDetail;
         }
 
+//        WebClientResponseException$BadRequest
+//        JpaSystemException
         if (exception instanceof UsernameNotFoundException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), "Usuário não encontrada.");
             errorDetail.setProperty("description", "Usuário não encontrado.");

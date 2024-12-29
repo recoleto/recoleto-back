@@ -11,5 +11,6 @@ import java.util.ListIterator;
 public enum Role {
     ADMIN,
     USUARIO,
-    EMPRESA
+    EMPRESA,
+    PONTO_DE_COLETA
 }

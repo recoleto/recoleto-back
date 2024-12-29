@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "tb_address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,7 +29,7 @@ public class Address {
     @Column(name = "address_role")
     private Role role;
     @CreationTimestamp
-    @Column(name = "address_creaded_at")
+    @Column(name = "address_created_at")
     private Date createdAt;
 
 }
