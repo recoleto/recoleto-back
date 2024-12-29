@@ -75,15 +75,6 @@ public class CollectionPointService {
     }
 
     public List<CollectionPointDTO> getAllCollectionPoints() {
-//        UUID companyId = appConfig.companyAuthenticator();
-//        Company company = companyRepository.findCompanyById(companyId);
-//
-//        if (company == null) {
-//            return null;
-//        }
-
-        System.out.println(collectionPointRepository.findAll());
-
         return collectionPointRepository.findAll()
                 .stream()
                 .map(collectionPoint ->
@@ -101,9 +92,28 @@ public class CollectionPointService {
                 })
                 .toList(); // Use `collect(Collectors.toList())` for older Java versions
 
+    }
 
-//        List<CollectionPoint> collectionPointList = collectionPointRepository.findAllByCompany(company);
-//
-//        return CollectionPointDTO.convertCollectionPointListToDTO(collectionPointList);
+    public List<CollectionPointDTO> getAllCollectionPointsByCompanyId(UUID companyId) {
+        if (companyId == null) {
+            companyId = appConfig.companyAuthenticator();
+        }
+
+        return collectionPointRepository.findAllByCompany(companyRepository.findCompanyById(companyId))
+                .stream()
+                .map(collectionPoint ->
+                {
+                    CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
+                    if (collectionPoint.getAddress() != null) {
+                        pointDTO.setCep(collectionPoint.getAddress().getCep());
+                        pointDTO.setStreet(collectionPoint.getAddress().getStreet());
+                        pointDTO.setNumber(collectionPoint.getAddress().getNumber());
+                    }
+                    pointDTO.setPointUUID(collectionPoint.getId());
+                    pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
+                    pointDTO.setCompanyName(collectionPoint.getCompany().getName());
+                    return pointDTO;
+                })
+                .toList();
     }
 }

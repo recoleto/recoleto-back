@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,6 +31,18 @@ public class CollectionPointController {
     @GetMapping("/all")
     public ResponseEntity<List<CollectionPointDTO>> getAllCollectionPoints () {
         List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPoints();
+        return ResponseEntity.status(200).body(collectionPointDTOList);
+    }
+
+    @GetMapping("/company")
+    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByCompany () {
+        List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByCompanyId(null);
+        return ResponseEntity.status(200).body(collectionPointDTOList);
+    }
+
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByCompanyId (@PathVariable UUID companyId) {
+        List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByCompanyId(companyId);
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }
 }
