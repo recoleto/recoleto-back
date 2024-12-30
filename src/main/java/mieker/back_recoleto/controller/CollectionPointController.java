@@ -58,6 +58,12 @@ public class CollectionPointController {
         List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByUSW(usw);
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }
+
+    @PutMapping("/update/{pointId}")
+    public ResponseEntity<CollectionPointDTO> updateCollectionPoint (@PathVariable UUID pointId, @RequestBody CollectionPointCreateDTO input) {
+        CollectionPointDTO response = collectionPointService.updateCollectionPoint(pointId, input);
+        return ResponseEntity.status(200).body(response);
+    }
 }
 
 // get all collection points
@@ -66,3 +72,6 @@ public class CollectionPointController {
 // get collection point by usw
 // update collection point
 // delete collection point
+
+// ponto de coleta da pra deletar **
+// ai n precisa fazer verificação

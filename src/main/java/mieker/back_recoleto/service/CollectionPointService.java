@@ -41,6 +41,21 @@ public class CollectionPointService {
         this.addressRepository = addressRepository;
     }
 
+    private CollectionPointDTO mapCollectionPointToDTO(CollectionPoint collectionPoint) {
+        CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
+        if (collectionPoint.getAddress() != null) {
+            pointDTO.setCep(collectionPoint.getAddress().getCep());
+            pointDTO.setStreet(collectionPoint.getAddress().getStreet());
+            pointDTO.setNumber(collectionPoint.getAddress().getNumber());
+            pointDTO.setLatitude(collectionPoint.getAddress().getLatitude());
+            pointDTO.setLongitude(collectionPoint.getAddress().getLongitude());
+        }
+        pointDTO.setPointUUID(collectionPoint.getId());
+        pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
+        pointDTO.setCompanyName(collectionPoint.getCompany().getName());
+        return pointDTO;
+    }
+
     public String createCollectionPoint (CollectionPointCreateDTO input) {
         UUID companyId = appConfig.companyAuthenticator();
         Company company = companyRepository.findCompanyById(companyId);
@@ -63,7 +78,7 @@ public class CollectionPointService {
         address.setStreet(input.getStreet());
         address.setNumber(input.getNumber());
         address.setCep(input.getCep());
-        if (input.getCep() != null || input.getNumber() != null) {
+        if (input.getCep() != null && input.getNumber() != null) {
             ResponseGeoCodeAPI responseGeoCodeAPI = addressService.getAddress(input.getCep(), input.getNumber());
             address.setLatitude(responseGeoCodeAPI.getLat());
             address.setLongitude(responseGeoCodeAPI.getLon());
@@ -80,19 +95,7 @@ public class CollectionPointService {
     public List<CollectionPointDTO> getAllCollectionPoints() {
         return collectionPointRepository.findAll()
                 .stream()
-                .map(collectionPoint ->
-                {
-                    CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
-                    if (collectionPoint.getAddress() != null) {
-                        pointDTO.setCep(collectionPoint.getAddress().getCep());
-                        pointDTO.setStreet(collectionPoint.getAddress().getStreet());
-                        pointDTO.setNumber(collectionPoint.getAddress().getNumber());
-                    }
-                    pointDTO.setPointUUID(collectionPoint.getId());
-                    pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
-                    pointDTO.setCompanyName(collectionPoint.getCompany().getName());
-                    return pointDTO;
-                })
+                .map(this::mapCollectionPointToDTO)
                 .toList(); // Use `collect(Collectors.toList())` for older Java versions
 
     }
@@ -104,55 +107,62 @@ public class CollectionPointService {
 
         return collectionPointRepository.findAllByCompany(companyRepository.findCompanyById(companyId))
                 .stream()
-                .map(collectionPoint ->
-                {
-                    CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
-                    if (collectionPoint.getAddress() != null) {
-                        pointDTO.setCep(collectionPoint.getAddress().getCep());
-                        pointDTO.setStreet(collectionPoint.getAddress().getStreet());
-                        pointDTO.setNumber(collectionPoint.getAddress().getNumber());
-                    }
-                    pointDTO.setPointUUID(collectionPoint.getId());
-                    pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
-                    pointDTO.setCompanyName(collectionPoint.getCompany().getName());
-                    return pointDTO;
-                })
+                .map(this::mapCollectionPointToDTO)
                 .toList();
     }
 
     public CollectionPointDTO getCollectionPointById(UUID pointId) {
         CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
-
-        CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
-
-        if (collectionPoint.getAddress() != null) {
-            pointDTO.setCep(collectionPoint.getAddress().getCep());
-            pointDTO.setStreet(collectionPoint.getAddress().getStreet());
-            pointDTO.setNumber(collectionPoint.getAddress().getNumber());
-        }
-
-        pointDTO.setPointUUID(collectionPoint.getId());
-        pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
-        pointDTO.setCompanyName(collectionPoint.getCompany().getName());
-        return pointDTO;
+        return this.mapCollectionPointToDTO(collectionPoint);
     }
 
     public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWaste usw) {
         return collectionPointRepository.findCollectionPointsByUrbanSolidWaste(usw)
                 .stream()
-                .map(collectionPoint ->
-                {
-                    CollectionPointDTO pointDTO = modelMapper.map(collectionPoint, CollectionPointDTO.class);
-                    if (collectionPoint.getAddress() != null) {
-                        pointDTO.setCep(collectionPoint.getAddress().getCep());
-                        pointDTO.setStreet(collectionPoint.getAddress().getStreet());
-                        pointDTO.setNumber(collectionPoint.getAddress().getNumber());
-                    }
-                    pointDTO.setPointUUID(collectionPoint.getId());
-                    pointDTO.setCompanyUUID(collectionPoint.getCompany().getId());
-                    pointDTO.setCompanyName(collectionPoint.getCompany().getName());
-                    return pointDTO;
-                })
+                .map(this::mapCollectionPointToDTO)
                 .toList();
+    }
+
+    public CollectionPointDTO updateCollectionPoint(UUID pointId, CollectionPointCreateDTO input) {
+        CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+
+        if (input.getNumber() != null) {
+            collectionPoint.setName(input.getName());
+        }
+
+        if (input.getPhone() != null) {
+            collectionPoint.setPhone(input.getPhone());
+        }
+
+        if (input.getUrbanSolidWaste() != null) {
+            collectionPoint.setUrbanSolidWaste(input.getUrbanSolidWaste());
+        }
+
+        Address address = collectionPoint.getAddress();
+
+        if (input.getCep() != null) {
+            address.setCep(input.getCep());
+        }
+
+        if (input.getStreet() != null) {
+            address.setStreet(input.getStreet());
+        }
+
+        if (input.getNumber() != null) {
+            address.setNumber(input.getNumber());
+        }
+
+        if (input.getCep() != null && input.getNumber() != null) {
+            ResponseGeoCodeAPI responseGeoCodeAPI = addressService.getAddress(input.getCep(), input.getNumber());
+            address.setLatitude(responseGeoCodeAPI.getLat());
+            address.setLongitude(responseGeoCodeAPI.getLon());
+        }
+        addressRepository.save(address);
+
+        collectionPoint.setAddress(address);
+
+        collectionPointRepository.save(collectionPoint);
+
+        return this.mapCollectionPointToDTO(collectionPoint);
     }
 }
