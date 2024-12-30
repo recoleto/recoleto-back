@@ -64,6 +64,12 @@ public class CollectionPointController {
         CollectionPointDTO response = collectionPointService.updateCollectionPoint(pointId, input);
         return ResponseEntity.status(200).body(response);
     }
+
+    @PutMapping("/delete/{pointId}")
+    public ResponseEntity<String> deleteCollectionPoint (@PathVariable UUID pointId) {
+        String response = collectionPointService.deleteCollectionPoint(pointId);
+        return ResponseEntity.status(200).body(response);
+    }
 }
 
 // get all collection points
@@ -73,5 +79,3 @@ public class CollectionPointController {
 // update collection point
 // delete collection point
 
-// ponto de coleta da pra deletar **
-// ai n precisa fazer verificação

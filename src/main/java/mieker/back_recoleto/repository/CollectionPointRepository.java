@@ -13,6 +13,8 @@ import java.util.UUID;
 @Repository
 public interface CollectionPointRepository extends JpaRepository<CollectionPoint, UUID> {
     List<CollectionPoint> findAllByCompany(Company company);
-
+    List<CollectionPoint> findAllByCompanyAndStatus(Company company, boolean status);
     List<CollectionPoint> findCollectionPointsByUrbanSolidWaste(UrbanSolidWaste usw);
+    List<CollectionPoint> findCollectionPointsByUrbanSolidWasteAndStatus(UrbanSolidWaste usw, boolean status);
+    List<CollectionPoint> findAllByStatus(Boolean status);
 }

@@ -56,6 +56,12 @@ public class CollectionPointService {
         return pointDTO;
     }
 
+    private void isCollectionPointActive(CollectionPoint collectionPoint) {
+        if (!collectionPoint.getStatus()) {
+            throw new NotFoundException("Ponto de coleta não encontrado.");
+        }
+    }
+
     public String createCollectionPoint (CollectionPointCreateDTO input) {
         UUID companyId = appConfig.companyAuthenticator();
         Company company = companyRepository.findCompanyById(companyId);
@@ -93,7 +99,7 @@ public class CollectionPointService {
     }
 
     public List<CollectionPointDTO> getAllCollectionPoints() {
-        return collectionPointRepository.findAll()
+        return collectionPointRepository.findAllByStatus(true)
                 .stream()
                 .map(this::mapCollectionPointToDTO)
                 .toList(); // Use `collect(Collectors.toList())` for older Java versions
@@ -105,7 +111,7 @@ public class CollectionPointService {
             companyId = appConfig.companyAuthenticator();
         }
 
-        return collectionPointRepository.findAllByCompany(companyRepository.findCompanyById(companyId))
+        return collectionPointRepository.findAllByCompanyAndStatus(companyRepository.findCompanyById(companyId), true)
                 .stream()
                 .map(this::mapCollectionPointToDTO)
                 .toList();
@@ -113,11 +119,12 @@ public class CollectionPointService {
 
     public CollectionPointDTO getCollectionPointById(UUID pointId) {
         CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Empresa não encontrada."));
+        this.isCollectionPointActive(collectionPoint);
         return this.mapCollectionPointToDTO(collectionPoint);
     }
 
     public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWaste usw) {
-        return collectionPointRepository.findCollectionPointsByUrbanSolidWaste(usw)
+        return collectionPointRepository.findCollectionPointsByUrbanSolidWasteAndStatus(usw, true)
                 .stream()
                 .map(this::mapCollectionPointToDTO)
                 .toList();
@@ -125,6 +132,7 @@ public class CollectionPointService {
 
     public CollectionPointDTO updateCollectionPoint(UUID pointId, CollectionPointCreateDTO input) {
         CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+        this.isCollectionPointActive(collectionPoint);
 
         if (input.getNumber() != null) {
             collectionPoint.setName(input.getName());
@@ -165,4 +173,15 @@ public class CollectionPointService {
 
         return this.mapCollectionPointToDTO(collectionPoint);
     }
+
+    public String deleteCollectionPoint(UUID pointId) {
+        CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+        this.isCollectionPointActive(collectionPoint);
+        collectionPoint.setStatus(false);
+        collectionPointRepository.save(collectionPoint);
+        return "Ponto de coleta deletado com sucesso.";
+    }
 }
+
+// todo
+// fazer uma rota para que os usuários possam ver os pontos de coleta que ele excluiu pra poder reativar
