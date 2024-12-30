@@ -5,6 +5,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -96,6 +97,12 @@ public class GlobalHandlerException extends Throwable {
 
 //        WebClientResponseException$BadRequest
 //        JpaSystemException
+
+        if (exception instanceof HttpMessageNotReadableException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), exception.getMessage());
+            errorDetail.setProperty("description", "Formato inválido");
+            return errorDetail;
+        }
         if (exception instanceof UsernameNotFoundException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), "Usuário não encontrada.");
             errorDetail.setProperty("description", "Usuário não encontrado.");

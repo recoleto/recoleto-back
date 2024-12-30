@@ -14,8 +14,10 @@ import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.CollectionPointRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,7 +64,15 @@ public class CollectionPointService {
         }
     }
 
-    public String createCollectionPoint (CollectionPointCreateDTO input) {
+    private static UrbanSolidWaste getUSWType(String type) throws BadRequestException {
+        try {
+            return UrbanSolidWaste.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Tipo de Resíduo Sólido Urbano inválido: " + type);
+        }
+    }
+
+    public String createCollectionPoint (CollectionPointCreateDTO input) throws BadRequestException {
         UUID companyId = appConfig.companyAuthenticator();
         Company company = companyRepository.findCompanyById(companyId);
 
@@ -75,9 +85,7 @@ public class CollectionPointService {
         collectionPoint.setName(input.getName());
         collectionPoint.setPhone(input.getPhone());
         collectionPoint.setStatus(true);
-        collectionPoint.setUrbanSolidWaste(input.getUrbanSolidWaste());
-//        TODO:
-//        fazer uma verificação se existe esse USW
+        collectionPoint.setUrbanSolidWaste(getUSWType(input.getUrbanSolidWaste()));
 
         Address address = new Address();
         address.setRole(Role.PONTO_DE_COLETA);
@@ -123,14 +131,15 @@ public class CollectionPointService {
         return this.mapCollectionPointToDTO(collectionPoint);
     }
 
-    public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWaste usw) {
+    public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWaste usw) throws BadRequestException {
+        usw = getUSWType(usw.toString());
         return collectionPointRepository.findCollectionPointsByUrbanSolidWasteAndStatus(usw, true)
                 .stream()
                 .map(this::mapCollectionPointToDTO)
                 .toList();
     }
 
-    public CollectionPointDTO updateCollectionPoint(UUID pointId, CollectionPointCreateDTO input) {
+    public CollectionPointDTO updateCollectionPoint(UUID pointId, CollectionPointCreateDTO input) throws BadRequestException {
         CollectionPoint collectionPoint = collectionPointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
         this.isCollectionPointActive(collectionPoint);
 
@@ -143,7 +152,7 @@ public class CollectionPointService {
         }
 
         if (input.getUrbanSolidWaste() != null) {
-            collectionPoint.setUrbanSolidWaste(input.getUrbanSolidWaste());
+            collectionPoint.setUrbanSolidWaste(getUSWType(input.getUrbanSolidWaste()));
         }
 
         Address address = collectionPoint.getAddress();
@@ -185,3 +194,6 @@ public class CollectionPointService {
 
 // todo
 // fazer uma rota para que os usuários possam ver os pontos de coleta que ele excluiu pra poder reativar
+
+// todo
+// fazer uma validação para ver se o id da empresa é o msm da empresa que está no banco

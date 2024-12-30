@@ -5,6 +5,7 @@ import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.CollectionPointDTO;
 import mieker.back_recoleto.service.CollectionPointService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class CollectionPointController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createCollectionPoint (@RequestBody CollectionPointCreateDTO input) {
+    public ResponseEntity<String> createCollectionPoint (@RequestBody CollectionPointCreateDTO input) throws BadRequestException {
         String response = collectionPointService.createCollectionPoint(input);
         return ResponseEntity.status(201).body(response);
     }
@@ -54,13 +55,13 @@ public class CollectionPointController {
     }
 
     @GetMapping("/usw/{usw}")
-    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByUSWType(@PathVariable UrbanSolidWaste usw) {
+    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByUSWType(@PathVariable UrbanSolidWaste usw) throws BadRequestException {
         List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByUSW(usw);
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }
 
     @PutMapping("/update/{pointId}")
-    public ResponseEntity<CollectionPointDTO> updateCollectionPoint (@PathVariable UUID pointId, @RequestBody CollectionPointCreateDTO input) {
+    public ResponseEntity<CollectionPointDTO> updateCollectionPoint (@PathVariable UUID pointId, @RequestBody CollectionPointCreateDTO input) throws BadRequestException {
         CollectionPointDTO response = collectionPointService.updateCollectionPoint(pointId, input);
         return ResponseEntity.status(200).body(response);
     }

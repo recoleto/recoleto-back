@@ -10,5 +10,5 @@ public class CollectionPointCreateDTO {
     private String cep;
     private String street;
     private String number;
-    private UrbanSolidWaste urbanSolidWaste;
+    private String urbanSolidWaste;
 }
