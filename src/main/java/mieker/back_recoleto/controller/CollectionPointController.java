@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
-@PreAuthorize("hasAuthority('EMPRESA')")
 @RequestMapping("/collection-point")
 public class CollectionPointController {
     private final CollectionPointService collectionPointService;
@@ -24,6 +23,7 @@ public class CollectionPointController {
         this.collectionPointService = collectionPointService;
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @PostMapping()
     public ResponseEntity<String> createCollectionPoint (@RequestBody CollectionPointCreateDTO input) throws BadRequestException {
         String response = collectionPointService.createCollectionPoint(input);
@@ -36,6 +36,7 @@ public class CollectionPointController {
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @GetMapping("/company")
     public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByCompany () {
         List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByCompanyId(null);
@@ -60,12 +61,14 @@ public class CollectionPointController {
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @PutMapping("/update/{pointId}")
     public ResponseEntity<CollectionPointDTO> updateCollectionPoint (@PathVariable UUID pointId, @RequestBody CollectionPointCreateDTO input) throws BadRequestException {
         CollectionPointDTO response = collectionPointService.updateCollectionPoint(pointId, input);
         return ResponseEntity.status(200).body(response);
     }
 
+    @PreAuthorize("hasAuthority('EMPRESA') or hasAuthority('ADMIN')")
     @PutMapping("/delete/{pointId}")
     public ResponseEntity<String> deleteCollectionPoint (@PathVariable UUID pointId) {
         String response = collectionPointService.deleteCollectionPoint(pointId);
