@@ -28,13 +28,13 @@ public class CompanyController {
         return ResponseEntity.status(200).body(companyService.getCompany(null));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDTO> getCompanyById (@PathVariable UUID id) {
         return ResponseEntity.status(200).body(companyService.getCompany(id));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<CompanyDTO>> getAllCompany () {
         return ResponseEntity.status(200).body(companyService.getAll());
@@ -46,7 +46,7 @@ public class CompanyController {
         return ResponseEntity.status(200).body(companyService.updateCompany(input));
     }
 
-    @PreAuthorize("hasAuthority('EMPRESA')")
+    @PreAuthorize("hasAuthority('EMPRESA') or hasAuthority('ADMIN')")
     @PutMapping("/disable")
     public ResponseEntity<String> disableCompany () {
         return ResponseEntity.status(200).body(companyService.disableCompany());

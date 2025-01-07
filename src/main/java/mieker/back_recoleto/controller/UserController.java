@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
-@PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
+//@PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -22,30 +22,34 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getUser () {
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return ResponseEntity.status(200).body(userService.getUser(null));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById (@PathVariable UUID id) {
         System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return ResponseEntity.status(200).body(userService.getUser(id));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    só o admin pode ver todos os usuários ?
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getAllUsers () {
         return ResponseEntity.status(200).body(userService.getAllUsers());
     }
 
+    @PreAuthorize("hasAuthority('USUARIO')")
     @PutMapping("/update")
     public ResponseEntity<UserDTO> updateUser (@RequestBody UpdateUserDTO input) {
         return ResponseEntity.status(200).body(userService.updateUser(input));
     }
 
+    @PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
     @PutMapping("/disable")
     public ResponseEntity<String> disableUser () {
         return ResponseEntity.status(200).body(userService.disableUser());
