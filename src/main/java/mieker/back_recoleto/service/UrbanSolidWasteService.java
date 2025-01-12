@@ -1,13 +1,20 @@
 package mieker.back_recoleto.service;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import mieker.back_recoleto.config.ApplicationConfiguration;
+import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import mieker.back_recoleto.entity.dto.UrbanSolidWasteCreateDTO;
+import mieker.back_recoleto.entity.dto.UrbanSolidWasteDTO;
 import mieker.back_recoleto.entity.model.UrbanSolidWaste;
+import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.UrbanSolidWasteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UrbanSolidWasteService {
@@ -33,5 +40,25 @@ public class UrbanSolidWasteService {
         }
         urbanSolidWasteRepository.save(usw);
         return "Resíduo sólido urbano criado com sucesso!";
+    }
+
+    public List<UrbanSolidWasteDTO> getUrbanSolidWasteList() {
+        List<UrbanSolidWaste> uswList = urbanSolidWasteRepository.findAll();
+        return uswList.stream().map(usw -> modelMapper.map(usw, UrbanSolidWasteDTO.class)).toList();
+    }
+
+    public UrbanSolidWasteDTO getUrbanSolidWasteById(UUID id) {
+        UrbanSolidWaste usw = urbanSolidWasteRepository.findById(id).orElseThrow(() -> new NotFoundException("Resíduo sólido urbano não encontrado."));
+        return modelMapper.map(usw, UrbanSolidWasteDTO.class);
+    }
+
+    public UrbanSolidWasteDTO getUrbanSolidWasteByName(String name) {
+        UrbanSolidWaste usw = urbanSolidWasteRepository.findByName(name).orElseThrow(() -> new NotFoundException("Resíduo sólido urbano não castrado."));
+        return modelMapper.map(usw, UrbanSolidWasteDTO.class);
+    }
+
+    public List<UrbanSolidWasteDTO> getUrbanSolidWasteByType(UrbanSolidWasteEnum type) {
+        List<UrbanSolidWaste> uswList = urbanSolidWasteRepository.findByType(type);
+        return uswList.stream().map(usw -> modelMapper.map(usw, UrbanSolidWasteDTO.class)).toList();
     }
 }
