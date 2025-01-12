@@ -1,7 +1,7 @@
 package mieker.back_recoleto.controller;
 
 
-import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
+import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.CollectionPointDTO;
 import mieker.back_recoleto.service.CollectionPointService;
@@ -56,7 +56,7 @@ public class CollectionPointController {
     }
 
     @GetMapping("/usw/{usw}")
-    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByUSWType(@PathVariable UrbanSolidWaste usw) throws BadRequestException {
+    public ResponseEntity<List<CollectionPointDTO>> getCollectionPointsByUSWType(@PathVariable UrbanSolidWasteEnum usw) throws BadRequestException {
         List<CollectionPointDTO> collectionPointDTOList = collectionPointService.getAllCollectionPointsByUSW(usw);
         return ResponseEntity.status(200).body(collectionPointDTOList);
     }

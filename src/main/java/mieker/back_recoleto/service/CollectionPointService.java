@@ -2,10 +2,9 @@ package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.Role;
-import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
+import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.CollectionPointDTO;
-import mieker.back_recoleto.entity.dto.CompanyDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.CollectionPoint;
 import mieker.back_recoleto.entity.model.Company;
@@ -17,11 +16,9 @@ import mieker.back_recoleto.repository.CompanyRepository;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -64,9 +61,9 @@ public class CollectionPointService {
         }
     }
 
-    private static UrbanSolidWaste getUSWType(String type) throws BadRequestException {
+    private static UrbanSolidWasteEnum getUSWType(String type) throws BadRequestException {
         try {
-            return UrbanSolidWaste.valueOf(type.toUpperCase());
+            return UrbanSolidWasteEnum.valueOf(type.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new BadRequestException("Tipo de Resíduo Sólido Urbano inválido: " + type);
         }
@@ -85,7 +82,7 @@ public class CollectionPointService {
         collectionPoint.setName(input.getName());
         collectionPoint.setPhone(input.getPhone());
         collectionPoint.setStatus(true);
-        collectionPoint.setUrbanSolidWaste(getUSWType(input.getUrbanSolidWaste()));
+        collectionPoint.setUrbanSolidWasteEnum(getUSWType(input.getUrbanSolidWaste()));
 
         Address address = new Address();
         address.setRole(Role.PONTO_DE_COLETA);
@@ -131,9 +128,9 @@ public class CollectionPointService {
         return this.mapCollectionPointToDTO(collectionPoint);
     }
 
-    public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWaste usw) throws BadRequestException {
+    public List<CollectionPointDTO> getAllCollectionPointsByUSW(UrbanSolidWasteEnum usw) throws BadRequestException {
         usw = getUSWType(usw.toString());
-        return collectionPointRepository.findCollectionPointsByUrbanSolidWasteAndStatus(usw, true)
+        return collectionPointRepository.findCollectionPointsByUrbanSolidWasteEnumAndStatus(usw, true)
                 .stream()
                 .map(this::mapCollectionPointToDTO)
                 .toList();
@@ -152,7 +149,7 @@ public class CollectionPointService {
         }
 
         if (input.getUrbanSolidWaste() != null) {
-            collectionPoint.setUrbanSolidWaste(getUSWType(input.getUrbanSolidWaste()));
+            collectionPoint.setUrbanSolidWasteEnum(getUSWType(input.getUrbanSolidWaste()));
         }
 
         Address address = collectionPoint.getAddress();
