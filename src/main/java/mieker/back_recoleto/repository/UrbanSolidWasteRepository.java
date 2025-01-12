@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface UrbanSolidWasteRepository extends JpaRepository<UrbanSolidWaste, UUID> {
+    boolean existsByName(String name);
 }

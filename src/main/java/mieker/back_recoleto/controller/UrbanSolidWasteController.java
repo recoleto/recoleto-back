@@ -19,17 +19,19 @@ public class UrbanSolidWasteController {
         this.urbanSolidWasteService = urbanSolidWasteService;
     }
 
-    @PreAuthorize("hasAuthority('EMPRESA') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('EMPRESA')")
     @PostMapping()
     public ResponseEntity<String> createUrbanSolidWaste (@RequestBody UrbanSolidWasteCreateDTO input) throws BadRequestException {
-        String response = urbanSolidWasteService.createUrbanSolidWaste(input);
+        String user = "company";
+        String response = urbanSolidWasteService.createUrbanSolidWaste(input, user);
         return ResponseEntity.status(201).body(response);
     }
 
-    @PreAuthorize("hasAuthority('EMPRESA') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/admin")
     public ResponseEntity<String> createUrbanSolidWasteAdminRoute (@RequestBody UrbanSolidWasteCreateDTO input) throws BadRequestException {
-        String response = urbanSolidWasteService.createUrbanSolidWaste(input);
+        String user = "admin";
+        String response = urbanSolidWasteService.createUrbanSolidWaste(input, user);
         return ResponseEntity.status(201).body(response);
     }
 }
