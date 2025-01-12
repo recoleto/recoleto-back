@@ -26,7 +26,7 @@ public class UrbanSolidWaste {
     private UrbanSolidWasteEnum type;
 
     @Column(name = "usw_points", nullable = false)
-    private int points;
+    private Integer points;
 
     @Column(name = "usw_created_by", nullable = false)
     private UUID createdBy;

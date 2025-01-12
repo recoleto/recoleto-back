@@ -5,6 +5,7 @@ import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import mieker.back_recoleto.entity.dto.UrbanSolidWasteCreateDTO;
 import mieker.back_recoleto.entity.dto.UrbanSolidWasteDTO;
+import mieker.back_recoleto.entity.dto.UrbanSolidWasteUpdateDTO;
 import mieker.back_recoleto.entity.model.UrbanSolidWaste;
 import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.UrbanSolidWasteRepository;
@@ -60,5 +61,21 @@ public class UrbanSolidWasteService {
     public List<UrbanSolidWasteDTO> getUrbanSolidWasteByType(UrbanSolidWasteEnum type) {
         List<UrbanSolidWaste> uswList = urbanSolidWasteRepository.findByType(type);
         return uswList.stream().map(usw -> modelMapper.map(usw, UrbanSolidWasteDTO.class)).toList();
+    }
+
+    public UrbanSolidWasteDTO updateUrbanSolidWaste(UUID id, UrbanSolidWasteUpdateDTO input) {
+        UrbanSolidWaste usw = urbanSolidWasteRepository.findById(id).orElseThrow(() -> new NotFoundException("Resíduo sólido urbano não encontrado."));
+
+        if (input.getPoints() != null) {
+            usw.setPoints(input.getPoints());
+        }
+        if (input.getName() != null && !input.getName().equals(usw.getName())) {
+            usw.setName(input.getName());
+            if (urbanSolidWasteRepository.existsByName(input.getName())) {
+                throw new DataIntegrityViolationException("O resíduo " + input.getName() + " já está cadastrado no sistema. Por favor, consulte a lista de resíduos cadastrados.");
+            }
+        }
+        urbanSolidWasteRepository.save(usw);
+        return modelMapper.map(usw, UrbanSolidWasteDTO.class);
     }
 }

@@ -7,5 +7,5 @@ import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 public class UrbanSolidWasteCreateDTO {
     private String name;
     private UrbanSolidWasteEnum type;
-    private int points;
+    private Integer points;
 }

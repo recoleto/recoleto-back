@@ -5,6 +5,7 @@ import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.UrbanSolidWasteCreateDTO;
 import mieker.back_recoleto.entity.dto.UrbanSolidWasteDTO;
+import mieker.back_recoleto.entity.dto.UrbanSolidWasteUpdateDTO;
 import mieker.back_recoleto.entity.model.UrbanSolidWaste;
 import mieker.back_recoleto.service.UrbanSolidWasteService;
 import org.apache.coyote.BadRequestException;
@@ -65,6 +66,13 @@ public class UrbanSolidWasteController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("admin/update/{id}")
+    public ResponseEntity<UrbanSolidWasteDTO> updateUrbanSolidWaste (@PathVariable UUID id, @RequestBody UrbanSolidWasteUpdateDTO input) {
+        UrbanSolidWasteDTO response = urbanSolidWasteService.updateUrbanSolidWaste(id, input);
+        return ResponseEntity.status(200).body(response);
+    }
+
 }
 // create usw // unique name // only empresas e admin
 // get usw by id
@@ -72,4 +80,3 @@ public class UrbanSolidWasteController {
 // get usw by type
 // get all usw
 // update usw // only admin
-// delete usw // only admin
