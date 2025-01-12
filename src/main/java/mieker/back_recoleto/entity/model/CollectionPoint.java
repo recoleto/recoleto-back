@@ -2,8 +2,7 @@ package mieker.back_recoleto.entity.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import mieker.back_recoleto.entity.Enum.Role;
-import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
+import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -26,7 +25,7 @@ public class CollectionPoint {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "point_usw", nullable = false)
-    private UrbanSolidWaste urbanSolidWaste;
+    private UrbanSolidWasteEnum urbanSolidWasteEnum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")

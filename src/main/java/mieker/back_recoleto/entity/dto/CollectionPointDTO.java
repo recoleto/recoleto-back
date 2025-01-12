@@ -1,7 +1,7 @@
 package mieker.back_recoleto.entity.dto;
 
 import lombok.Data;
-import mieker.back_recoleto.entity.Enum.UrbanSolidWaste;
+import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class CollectionPointDTO {
     private String number;
     private String latitude;
     private String longitude;
-    private UrbanSolidWaste urbanSolidWaste;
+    private UrbanSolidWasteEnum urbanSolidWasteEnum;
     private String companyName;
     private UUID companyUUID;
 }
