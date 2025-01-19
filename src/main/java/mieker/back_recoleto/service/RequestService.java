@@ -5,6 +5,7 @@ import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.dto.RequestCreateDTO;
 import mieker.back_recoleto.entity.dto.RequestDTO;
 import mieker.back_recoleto.entity.model.*;
+import mieker.back_recoleto.exception.AuthorizationDeniedException;
 import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.*;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,14 @@ public class RequestService {
 
     private RequestDTO mapRequestToDTO(Request request) {
         RequestDTO requestDTO = new RequestDTO();
-        requestDTO.setNumber(request.getNumber());
+        requestDTO.setRequestId(request.getId());
+        requestDTO.setSolicitationNumber(request.getNumber());
         requestDTO.setStatus(request.getStatus());
         requestDTO.setUserId(request.getUser().getId());
+        requestDTO.setUserName(request.getUser().getName());
         requestDTO.setCollectionPointId(request.getPoint().getId());
+        requestDTO.setCollectionPointName(request.getPoint().getName());
+        requestDTO.setCompanyName(request.getPoint().getCompany().getName());
         requestDTO.setCompanyId(request.getPoint().getCompany().getId());
 
         AtomicReference<Integer> points = new AtomicReference<>(0);
@@ -94,12 +99,22 @@ public class RequestService {
     public List<RequestDTO> getAllRequestsByPoint(UUID pointId) {
         CollectionPoint point = pointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
         if (!point.getCompany().getId().equals(appConfig.companyAuthenticator())) {
-            throw new NotFoundException("Ponto de coleta não encontrado.");
+            throw new AuthorizationDeniedException("Você não tem permissão para acessar os pedidos deste ponto de coleta.");
         }
         List<Request> requestList = reqRepository.findByPointId(point.getId());
         return requestList.stream().map(this::mapRequestToDTO).toList();
     }
 
-//    public RequestDTO getRequestById(UUID requestId) {
-//    }
+    public RequestDTO getRequestById(UUID requestId) {
+        Request request = reqRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Pedido de descarte não encontrado."));
+        CollectionPoint point = pointRepository.findById(request.getPoint().getId()).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+        if (!request.getUser().getId().equals(appConfig.userAuthenticator())) {
+            throw new AuthorizationDeniedException("Você não tem permissão para acessar este pedido de descarte.");
+        }
+        if (!point.getCompany().getId().equals(appConfig.companyAuthenticator())) {
+            throw new AuthorizationDeniedException("Você não tem permissão para acessar este pedido de descarte.");
+        }
+        return this.mapRequestToDTO(request);
+    }
+
 }

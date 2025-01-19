@@ -44,20 +44,20 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTOList);
     }
 
-//    @GetMapping("/{requestId}")
-//    public ResponseEntity<RequestDTO> getRequestById (@PathVariable UUID requestId) {
-//        RequestDTO requestDTO = requestService.getRequestById(requestId);
-//        return ResponseEntity.status(200).body(requestDTO);
-//    }
+    @GetMapping("/{requestId}")
+    public ResponseEntity<RequestDTO> getRequestById (@PathVariable UUID requestId) {
+        RequestDTO requestDTO = requestService.getRequestById(requestId);
+        return ResponseEntity.status(200).body(requestDTO);
+    }
 
 }
 // get request by id
-// get all requests
-// create request
+// get all requests **
+// create request **
 // update request
 // delete request
 // get request by user
 // get request by company
 // get request by status
-// get request by collection point
+// get request by collection point **
 

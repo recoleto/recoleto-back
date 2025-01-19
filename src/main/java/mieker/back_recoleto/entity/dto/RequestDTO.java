@@ -8,10 +8,14 @@ import java.util.UUID;
 
 @Data
 public class RequestDTO {
+    private UUID requestId;
     private UUID userId;
+    private String userName;
+    private String companyName;
+    private String collectionPointName;
     private UUID collectionPointId;
     private UUID companyId;
-    private Long number;
+    private Long solicitationNumber;
     private List<Waste> waste;
     private Integer points;
     private RequestStatus status;
