@@ -45,12 +45,12 @@ public class GlobalHandlerException extends Throwable {
 //            return errorDetail;
 //        }
 
-//        if (exception instanceof AuthorizationDeniedException) {
-//            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-//            errorDetail.setDetail("Acesso negado.");
-//            errorDetail.setProperty("description", "Acesso negado.");
-//            return errorDetail;
-//        }
+        if (exception instanceof AuthorizationDeniedException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setDetail("Acesso negado.");
+            errorDetail.setProperty("description", "Acesso negado.");
+            return errorDetail;
+        }
 
         if (exception instanceof SignatureException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());

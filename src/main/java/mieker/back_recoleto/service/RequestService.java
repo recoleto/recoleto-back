@@ -2,12 +2,14 @@ package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.RequestStatus;
+import mieker.back_recoleto.entity.Enum.Role;
 import mieker.back_recoleto.entity.dto.RequestCreateDTO;
 import mieker.back_recoleto.entity.dto.RequestDTO;
 import mieker.back_recoleto.entity.model.*;
 import mieker.back_recoleto.exception.AuthorizationDeniedException;
 import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -107,14 +109,12 @@ public class RequestService {
 
     public RequestDTO getRequestById(UUID requestId) {
         Request request = reqRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Pedido de descarte não encontrado."));
-        CollectionPoint point = pointRepository.findById(request.getPoint().getId()).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
-        if (!request.getUser().getId().equals(appConfig.userAuthenticator())) {
-            throw new AuthorizationDeniedException("Você não tem permissão para acessar este pedido de descarte.");
-        }
-        if (!point.getCompany().getId().equals(appConfig.companyAuthenticator())) {
-            throw new AuthorizationDeniedException("Você não tem permissão para acessar este pedido de descarte.");
-        }
         return this.mapRequestToDTO(request);
     }
 
+    public List<RequestDTO> getAllRequestsByUser() {
+        User user = userRepository.findUserById(appConfig.userAuthenticator());
+        List<Request> requestList = reqRepository.findByUserId(user.getId());
+        return requestList.stream().map(this::mapRequestToDTO).toList();
+    }
 }

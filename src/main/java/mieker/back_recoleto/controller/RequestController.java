@@ -50,6 +50,13 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTO);
     }
 
+    @GetMapping("/user/all")
+    public ResponseEntity<List<RequestDTO>> getRequestsByUser () {
+        List<RequestDTO> requestDTOList = requestService.getAllRequestsByUser();
+        return ResponseEntity.status(200).body(requestDTOList);
+    }
+
+
 }
 // get request by id
 // get all requests **

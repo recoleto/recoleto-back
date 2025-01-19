@@ -15,4 +15,6 @@ public interface RequestRepository extends JpaRepository<Request, UUID> {
     Long findLastNumber();
 
     List<Request> findByPointId(UUID point);
+
+    List<Request> findByUserId(UUID id);
 }
