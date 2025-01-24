@@ -28,6 +28,7 @@ public class Request {
     @Column(name = "request_number", nullable = false, unique = true)
     private Long number;
 
+    @Column(name = "request_status", nullable = false, unique = true)
     private RequestStatus status;
 
     @Transient

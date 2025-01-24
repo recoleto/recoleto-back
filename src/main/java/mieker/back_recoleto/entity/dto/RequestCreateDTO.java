@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class RequestCreateDTO {
-    private UUID collectionPointId;
+//    private UUID collectionPointId;
     private List<WasteDTO> waste;
 
     @Data

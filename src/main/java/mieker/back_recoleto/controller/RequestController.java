@@ -1,9 +1,11 @@
 package mieker.back_recoleto.controller;
 
 
+import mieker.back_recoleto.entity.Enum.Role;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.RequestCreateDTO;
 import mieker.back_recoleto.entity.dto.RequestDTO;
+import mieker.back_recoleto.entity.dto.UpdateRequestDTO;
 import mieker.back_recoleto.service.RequestService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +26,9 @@ public class RequestController {
     }
 
     @PreAuthorize("hasAuthority('USUARIO')")
-    @PostMapping()
-    public ResponseEntity<String> createCollectionPoint (@RequestBody RequestCreateDTO input) {
-        String response = requestService.createRequest(input);
+    @PostMapping("{pointId}")
+    public ResponseEntity<String> createCollectionPoint (@RequestBody RequestCreateDTO input, @PathVariable UUID pointId) {
+        String response = requestService.createRequest(input, pointId);
         return ResponseEntity.status(201).body(response);
     }
 
@@ -56,15 +58,45 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTOList);
     }
 
+//    @GetMapping("/user/all")
+//    public ResponseEntity<List<RequestDTO>> updateRequest () {
+//        List<RequestDTO> requestDTOList = requestService.getAllRequestsByUser();
+//        return ResponseEntity.status(200).body(requestDTOList);
+//    }
+
+    @PreAuthorize("hasAuthority('EMPRESA')")
+    @GetMapping("/company/all")
+    public ResponseEntity<List<RequestDTO>> getRequestsByCompany () {
+        List<RequestDTO> requestDTOList = requestService.getAllRequestsByCompany();
+        return ResponseEntity.status(200).body(requestDTOList);
+    }
+
+    @PutMapping("/update/company/{requestId}")
+    public ResponseEntity<RequestDTO> companyUpdateRequest (@RequestBody UpdateRequestDTO input, @PathVariable UUID requestId) {
+        Role role = Role.EMPRESA;
+        RequestDTO requestDTO = requestService.updateStatusRequest(input, requestId, role);
+        return ResponseEntity.status(200).body(requestDTO);
+    }
+
+    @PutMapping("/update/user/{requestId}")
+    public ResponseEntity<RequestDTO> userUpdateRequest (@RequestBody UpdateRequestDTO input, @PathVariable UUID requestId) {
+        Role role = Role.USUARIO;
+        RequestDTO requestDTO = requestService.updateStatusRequest(input, requestId, role);
+        return ResponseEntity.status(200).body(requestDTO);
+    }
+
 
 }
-// get request by id
+// get request by id **
 // get all requests **
 // create request **
-// update request
-// delete request
-// get request by user
-// get request by company
+// update request // mudar status que vai ser o cancelar também
+// delete request // cancelar
+// get request by user **
+// get request by company **
 // get request by status
 // get request by collection point **
+//
+
+// fazer verificação do request q só pode ser feito solicitação de descarte em pontos de coleta que aceitam o tipo de resíduo
 
