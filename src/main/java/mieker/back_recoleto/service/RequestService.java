@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -132,7 +133,14 @@ public class RequestService {
 
     public List<RequestDTO> getAllRequestsByCompany() {
         Company company = companyRepository.findCompanyById(appConfig.companyAuthenticator());
-        List<Request> requestList = reqRepository.findByPointId(company.getId());
+
+        List<CollectionPoint> pointList = pointRepository.findByCompanyId(company.getId());
+//        System.out.println(pointList);
+        List<Request> requestList = new ArrayList<>();
+        for (CollectionPoint point : pointList) {
+            List<Request> requestsForPoint = reqRepository.findByPointId(point.getId());
+            requestList.addAll(requestsForPoint); // Adiciona à lista acumuladora
+        }
         return requestList.stream().map(this::mapRequestToDTO).toList();
     }
 

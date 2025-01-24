@@ -16,4 +16,6 @@ public interface CollectionPointRepository extends JpaRepository<CollectionPoint
     List<CollectionPoint> findCollectionPointsByUrbanSolidWasteEnum(UrbanSolidWasteEnum usw);
     List<CollectionPoint> findCollectionPointsByUrbanSolidWasteEnumAndStatus(UrbanSolidWasteEnum usw, boolean status);
     List<CollectionPoint> findAllByStatus(Boolean status);
+
+    List<CollectionPoint> findByCompanyId(UUID id);
 }
