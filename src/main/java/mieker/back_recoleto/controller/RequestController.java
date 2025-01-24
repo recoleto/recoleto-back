@@ -85,6 +85,12 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTO);
     }
 
+    @GetMapping("/update/collection-point/{pointId}")
+    public ResponseEntity<RequestDTO> getCollectionPointRequests (@PathVariable UUID pointId) {
+        RequestDTO requestDTO = requestService.getCollectionPointRequests(pointId);
+        return ResponseEntity.status(200).body(requestDTO);
+    }
+
 
 }
 // get request by id **

@@ -135,7 +135,6 @@ public class RequestService {
         Company company = companyRepository.findCompanyById(appConfig.companyAuthenticator());
 
         List<CollectionPoint> pointList = pointRepository.findByCompanyId(company.getId());
-//        System.out.println(pointList);
         List<Request> requestList = new ArrayList<>();
         for (CollectionPoint point : pointList) {
             List<Request> requestsForPoint = reqRepository.findByPointId(point.getId());
@@ -174,5 +173,11 @@ public class RequestService {
         request.setStatus(input.getStatus());
         reqRepository.save(request);
         return this.mapRequestToDTO(request);
+    }
+
+    public RequestDTO getCollectionPointRequests(UUID pointId) {
+        CollectionPoint point = pointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+        List<Request> requestList = reqRepository.findByPointId(point.getId());
+        return requestList.stream().map(this::mapRequestToDTO).toList().get(0);
     }
 }
