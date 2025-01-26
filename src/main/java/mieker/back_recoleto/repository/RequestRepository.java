@@ -1,5 +1,6 @@
 package mieker.back_recoleto.repository;
 
+import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.model.CollectionPoint;
 import mieker.back_recoleto.entity.model.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,8 @@ public interface RequestRepository extends JpaRepository<Request, UUID> {
     List<Request> findByPointId(UUID point);
 
     List<Request> findByUserId(UUID id);
+
+    List<Request> findByUserIdAndStatus(UUID id, RequestStatus status);
+
+    List<Request> findByPointIdAndStatus(UUID id, RequestStatus status);
 }

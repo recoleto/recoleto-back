@@ -67,16 +67,14 @@ public class RequestService {
     public String createRequest(RequestCreateDTO input, UUID pointId) {
         User user = userRepository.findUserById(appConfig.userAuthenticator());
         CollectionPoint point = pointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
-        Long number = reqRepository.findLastNumber();
-        if (number == null) {
-            number = 0L;
-        }
+        Long lastRequestNumber = reqRepository.findLastNumber();
+        long newRequestNumber = (lastRequestNumber == null) ? 1L : lastRequestNumber + 1;
 
         Request request = new Request();
 
         request.setUser(user);
         request.setPoint(point);
-        request.setNumber(number + 1);
+        request.setNumber(newRequestNumber);
         request.setStatus(RequestStatus.PENDENTE);
 
         for (RequestCreateDTO.WasteDTO wasteDTO : input.getWaste()) {
@@ -143,7 +141,6 @@ public class RequestService {
         return requestList.stream().map(this::mapRequestToDTO).toList();
     }
 
-
     public RequestDTO updateStatusRequest(UpdateRequestDTO input, UUID requestId, Role role) {
         Request request = reqRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Pedido de descarte não encontrado."));
         if (role.equals(Role.USUARIO) && !request.getUser().getId().equals(appConfig.userAuthenticator())) {
@@ -175,9 +172,27 @@ public class RequestService {
         return this.mapRequestToDTO(request);
     }
 
-    public RequestDTO getCollectionPointRequests(UUID pointId) {
+    public List<RequestDTO> getCollectionPointRequests(UUID pointId) {
         CollectionPoint point = pointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
         List<Request> requestList = reqRepository.findByPointId(point.getId());
-        return requestList.stream().map(this::mapRequestToDTO).toList().get(0);
+        return requestList.stream().map(this::mapRequestToDTO).toList();
+    }
+
+    public List<RequestDTO> getRequestsByStatus(RequestStatus status, Role role) {
+        User user;
+        Company company;
+        List<Request> requestList = new ArrayList<>();
+        if (role.equals(Role.USUARIO)) {
+            user = userRepository.findUserById(appConfig.userAuthenticator());
+            requestList = reqRepository.findByUserIdAndStatus(user.getId(), status);
+        } else if (role.equals(Role.EMPRESA)) {
+            company = companyRepository.findCompanyById(appConfig.companyAuthenticator());
+            List<CollectionPoint> pointList = pointRepository.findByCompanyId(company.getId());
+            for (CollectionPoint point : pointList) {
+                List<Request> requestsForPoint = reqRepository.findByPointIdAndStatus(point.getId(), status);
+                requestList.addAll(requestsForPoint); // Adiciona à lista acumuladora
+            }
+        }
+        return requestList.stream().map(this::mapRequestToDTO).toList();
     }
 }

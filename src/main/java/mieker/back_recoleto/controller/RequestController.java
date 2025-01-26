@@ -1,6 +1,7 @@
 package mieker.back_recoleto.controller;
 
 
+import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.Enum.Role;
 import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
 import mieker.back_recoleto.entity.dto.RequestCreateDTO;
@@ -58,6 +59,20 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTOList);
     }
 
+    @GetMapping("/user/status/{status}")
+    public ResponseEntity<List<RequestDTO>> getUserRequestsByStatus (@PathVariable RequestStatus status) {
+        Role role = Role.USUARIO;
+        List<RequestDTO> requestDTO = requestService.getRequestsByStatus(status, role);
+        return ResponseEntity.status(200).body(requestDTO);
+    }
+
+    @GetMapping("/company/status/{status}")
+    public ResponseEntity<List<RequestDTO>> getCompanyRequestsByStatus (@PathVariable RequestStatus status) {
+        Role role = Role.EMPRESA;
+        List<RequestDTO> requestDTO = requestService.getRequestsByStatus(status, role);
+        return ResponseEntity.status(200).body(requestDTO);
+    }
+
 //    @GetMapping("/user/all")
 //    public ResponseEntity<List<RequestDTO>> updateRequest () {
 //        List<RequestDTO> requestDTOList = requestService.getAllRequestsByUser();
@@ -85,11 +100,13 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTO);
     }
 
-    @GetMapping("/update/collection-point/{pointId}")
-    public ResponseEntity<RequestDTO> getCollectionPointRequests (@PathVariable UUID pointId) {
-        RequestDTO requestDTO = requestService.getCollectionPointRequests(pointId);
+    @GetMapping("/collection-point/{pointId}")
+    public ResponseEntity<List<RequestDTO>> getCollectionPointRequests (@PathVariable UUID pointId) {
+        List<RequestDTO> requestDTO = requestService.getCollectionPointRequests(pointId);
         return ResponseEntity.status(200).body(requestDTO);
     }
+
+
 
 
 }
@@ -100,7 +117,8 @@ public class RequestController {
 // delete request // cancelar
 // get request by user **
 // get request by company **
-// get request by status
+// get request by status - user
+// get request by status - company
 // get request by collection point **
 //
 
