@@ -5,14 +5,12 @@ import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.Enum.Role;
 import mieker.back_recoleto.entity.dto.RequestCreateDTO;
 import mieker.back_recoleto.entity.dto.RequestDTO;
-import mieker.back_recoleto.entity.dto.UpdateRequestDTO;
 import mieker.back_recoleto.entity.model.*;
 import mieker.back_recoleto.exception.NotAuthorized;
 import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +36,44 @@ public class RequestService {
         this.wasteRepository = wasteRepository;
         this.companyRepository = companyRepository;
     }
+    protected Integer getPoints(UUID userId) {
+        // Default to the authenticated user if no userId is provided
+        if (userId == null) {
+            userId = appConfig.userAuthenticator();
+        }
+
+        // Fetch the user and handle if not found
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new NotFoundException("User not found.");
+        }
+
+        // Fetch the list of received requests
+        List<Request> requestList = reqRepository.findByUserIdAndStatus(user.getId(), RequestStatus.RECEBIDO);
+
+        // Debugging or Logging: Log the requestList if needed (better than System.out.println)
+        if (requestList.isEmpty()) {
+            System.out.println("No received requests found for the user.");
+        } else {
+            requestList.forEach(request -> System.out.println("Request ID: " + request.getId() + ", Points: " + request.getPoints()));
+        }
+
+        // Sum up the points for all requests
+        int totalPoints = requestList.stream()
+                .mapToInt(this::calculatePointsForRequest)
+                .sum();
+
+        return totalPoints;
+    }
+
+    // Helper method to calculate points for a request
+    private int calculatePointsForRequest(Request request) {
+        return orderRepository.findByRequestId(request.getId()).stream()
+                .mapToInt(order -> order.getUsw().getPoints() * order.getQuantity())
+                .sum();
+    }
+
+
 
     private RequestDTO mapRequestToDTO(Request request) {
         RequestDTO requestDTO = new RequestDTO();
@@ -46,23 +82,38 @@ public class RequestService {
         requestDTO.setStatus(request.getStatus());
         requestDTO.setUserId(request.getUser().getId());
         requestDTO.setUserName(request.getUser().getName());
-        requestDTO.setCollectionPointId(request.getPoint().getId());
-        requestDTO.setCollectionPointName(request.getPoint().getName());
-        requestDTO.setCompanyName(request.getPoint().getCompany().getName());
-        requestDTO.setCompanyId(request.getPoint().getCompany().getId());
 
-        AtomicReference<Integer> points = new AtomicReference<>(0);
-        requestDTO.setWaste(orderRepository.findByRequestId(request.getId()).stream().map(order -> {
-            RequestDTO.Waste wasteDTO = new RequestDTO.Waste();
-            wasteDTO.setName(order.getUsw().getName());
-            wasteDTO.setQuantity(order.getQuantity());
-            points.updateAndGet(v -> v + order.getUsw().getPoints() * order.getQuantity());
-            return wasteDTO;
-        }).toList());
+        // Extract Collection Point and Company details for clarity
+        CollectionPoint point = request.getPoint();
+        Company company = point.getCompany();
 
-        requestDTO.setPoints(points.get());
+        requestDTO.setCollectionPointId(point.getId());
+        requestDTO.setCollectionPointName(point.getName());
+        requestDTO.setCompanyName(company.getName());
+        requestDTO.setCompanyId(company.getId());
+
+        // Map waste list and calculate total points
+        List<RequestDTO.Waste> wasteList = orderRepository.findByRequestId(request.getId())
+                .stream()
+                .map(order -> {
+                    RequestDTO.Waste wasteDTO = new RequestDTO.Waste();
+                    wasteDTO.setName(order.getUsw().getName());
+                    wasteDTO.setQuantity(order.getQuantity());
+                    return wasteDTO;
+                })
+                .toList();
+
+        int totalPoints = orderRepository.findByRequestId(request.getId())
+                .stream()
+                .mapToInt(order -> order.getUsw().getPoints() * order.getQuantity())
+                .sum();
+
+        requestDTO.setWaste(wasteList);
+        requestDTO.setPoints(totalPoints);
+
         return requestDTO;
     }
+
 
     public String createRequest(RequestCreateDTO input, UUID pointId) {
         User user = userRepository.findUserById(appConfig.userAuthenticator());
@@ -141,7 +192,7 @@ public class RequestService {
         return requestList.stream().map(this::mapRequestToDTO).toList();
     }
 
-    public RequestDTO updateStatusRequest(UpdateRequestDTO input, UUID requestId, Role role) {
+    public RequestDTO updateStatusRequest(RequestStatus status, UUID requestId, Role role) {
         Request request = reqRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Pedido de descarte não encontrado."));
         if (role.equals(Role.USUARIO) && !request.getUser().getId().equals(appConfig.userAuthenticator())) {
             throw new NotAuthorized("Você não tem permissão para alterar o status deste pedido.");
@@ -151,23 +202,22 @@ public class RequestService {
 
         if (request.getStatus().equals(RequestStatus.RECEBIDO) ||
                 request.getStatus().equals(RequestStatus.CANCELADO) ||
-                request.getStatus().equals(RequestStatus.REPROVADO) ||
-                request.getStatus().equals(RequestStatus.PENDENTE) && input.getStatus().equals(RequestStatus.APROVADO)) {
+                request.getStatus().equals(RequestStatus.REPROVADO)) {
             throw new DataIntegrityViolationException("Este pedido de descarte não pode ser alterado.");
         }
 
-        if (input.getStatus().equals(RequestStatus.RECEBIDO) && role.equals(Role.USUARIO) ||
-                input.getStatus().equals(RequestStatus.REPROVADO) && role.equals(Role.USUARIO) ||
-                input.getStatus().equals(RequestStatus.APROVADO) && role.equals(Role.USUARIO)) {
-            throw new DataIntegrityViolationException("Você não pode alterar o status do pedido para " + input.getStatus());
+        if (status.equals(RequestStatus.RECEBIDO) && role.equals(Role.USUARIO) ||
+                status.equals(RequestStatus.REPROVADO) && role.equals(Role.USUARIO) ||
+                status.equals(RequestStatus.APROVADO) && role.equals(Role.USUARIO)) {
+            throw new DataIntegrityViolationException("Você não pode alterar o status do pedido para " + status);
         }
 
-        if (input.getStatus().equals(RequestStatus.RECEBIDO) && role.equals(Role.EMPRESA) && request.getStatus().equals(RequestStatus.PENDENTE)) {
-            throw new DataIntegrityViolationException("Você não pode alterar o status do pedido para " + input.getStatus());
+        if (status.equals(RequestStatus.RECEBIDO) && role.equals(Role.EMPRESA) && request.getStatus().equals(RequestStatus.PENDENTE)) {
+            throw new DataIntegrityViolationException("Você não pode alterar o status do pedido para " + status);
         }
 //        adicionar validação que o único update q o usuário pode fazer é cancelar o pedido
 //        empresa pode aceitar (aprovado) ou recusar (recusado), dps de aprovado ou é (recebido) ou (cancelado)
-        request.setStatus(input.getStatus());
+        request.setStatus(status);
         reqRepository.save(request);
         return this.mapRequestToDTO(request);
     }

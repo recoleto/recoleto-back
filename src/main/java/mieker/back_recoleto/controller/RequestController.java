@@ -86,17 +86,17 @@ public class RequestController {
         return ResponseEntity.status(200).body(requestDTOList);
     }
 
-    @PutMapping("/update/company/{requestId}")
-    public ResponseEntity<RequestDTO> companyUpdateRequest (@RequestBody UpdateRequestDTO input, @PathVariable UUID requestId) {
+    @PutMapping("/update/company/{requestId}/{status}")
+    public ResponseEntity<RequestDTO> companyUpdateRequest (@PathVariable RequestStatus status, @PathVariable UUID requestId) {
         Role role = Role.EMPRESA;
-        RequestDTO requestDTO = requestService.updateStatusRequest(input, requestId, role);
+        RequestDTO requestDTO = requestService.updateStatusRequest(status, requestId, role);
         return ResponseEntity.status(200).body(requestDTO);
     }
 
-    @PutMapping("/update/user/{requestId}")
-    public ResponseEntity<RequestDTO> userUpdateRequest (@RequestBody UpdateRequestDTO input, @PathVariable UUID requestId) {
+    @PutMapping("/update/user/{requestId}/{status}")
+    public ResponseEntity<RequestDTO> userUpdateRequest (@PathVariable RequestStatus status, @PathVariable UUID requestId) {
         Role role = Role.USUARIO;
-        RequestDTO requestDTO = requestService.updateStatusRequest(input, requestId, role);
+        RequestDTO requestDTO = requestService.updateStatusRequest(status, requestId, role);
         return ResponseEntity.status(200).body(requestDTO);
     }
 

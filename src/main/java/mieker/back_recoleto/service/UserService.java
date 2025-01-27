@@ -23,16 +23,19 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
     private final AddressService addressService;
+    private final RequestService requestService;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public UserService(ApplicationConfiguration appConfig, UserRepository userRepository, PasswordEncoder passwordEncoder, AddressRepository addressRepository, AddressService addressService) {
+    public UserService(ApplicationConfiguration appConfig, UserRepository userRepository, PasswordEncoder passwordEncoder, AddressRepository addressRepository, AddressService addressService, RequestService requestService) {
         this.appConfig = appConfig;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
         this.addressService = addressService;
+
+        this.requestService = requestService;
     }
 
     private UUID getUserId() {
@@ -60,6 +63,7 @@ public class UserService {
                         userDTO.setCep(user.getAddress().getCep());
                         userDTO.setStreet(user.getAddress().getStreet());
                         userDTO.setNumber(user.getAddress().getNumber());
+                        userDTO.setPoints(requestService.getPoints(user.getId()));
                     }
                     return userDTO;
                 })
@@ -109,6 +113,7 @@ public class UserService {
         if (user.getAddress() != null) {
             userDTO.setCep(user.getAddress().getCep());
             userDTO.setStreet(user.getAddress().getStreet());
+            userDTO.setPoints(requestService.getPoints(user.getId()));
             userDTO.setNumber(user.getAddress().getNumber());
         }
 
