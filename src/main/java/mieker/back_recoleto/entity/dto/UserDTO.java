@@ -8,6 +8,7 @@ import java.util.Date;
 public class UserDTO {
     private String name;
     private String lastName;
+    private Integer points;
     private String email;
     private String phone;
     private String cpf;

@@ -5,6 +5,7 @@ import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.User;
+import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -21,15 +22,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressRepository;
+    private final AddressService addressService;
+    private final RequestService requestService;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public UserService(ApplicationConfiguration appConfig, UserRepository userRepository, PasswordEncoder passwordEncoder, AddressRepository addressRepository) {
+    public UserService(ApplicationConfiguration appConfig, UserRepository userRepository, PasswordEncoder passwordEncoder, AddressRepository addressRepository, AddressService addressService, RequestService requestService) {
         this.appConfig = appConfig;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressRepository = addressRepository;
+        this.addressService = addressService;
+
+        this.requestService = requestService;
     }
 
     private UUID getUserId() {
@@ -44,15 +50,7 @@ public class UserService {
 
         User user = userRepository.findUserById(userID);
 
-        UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
-
-        if (user.getAddress() != null) {
-            userDTO.setCep(user.getAddress().getCep());
-            userDTO.setStreet(user.getAddress().getStreet());
-            userDTO.setNumber(user.getAddress().getNumber());
-        }
-
-        return userDTO;
+        return getUserDTO(user);
     }
 
     public List<UserDTO> getAllUsers() {
@@ -65,6 +63,7 @@ public class UserService {
                         userDTO.setCep(user.getAddress().getCep());
                         userDTO.setStreet(user.getAddress().getStreet());
                         userDTO.setNumber(user.getAddress().getNumber());
+                        userDTO.setPoints(requestService.getPoints(user.getId()));
                     }
                     return userDTO;
                 })
@@ -75,16 +74,50 @@ public class UserService {
     public UserDTO updateUser(UpdateUserDTO input) {
         UUID userId = this.getUserId();
         User user = userRepository.findUserById(userId);
-        user.setName(input.getName());
-//        user.setPhone(input.getPhone());
-//        user.setLastName(input.getLastName());
-//        if (userRepository.existsByEmail(input.getEmail())) {
-//            throw new DataIntegrityViolationException("Email já cadastrado.");
-//        }
-//        user.setEmail(input.getEmail());
-//        user.setPassword(passwordEncoder.encode(input.getPassword()));
+
+        if (input.getName() != null) {
+            user.setName(input.getName());
+        }
+
+        Address address = user.getAddress();
+
+        if (input.getCep() != null) {
+            address.setCep(input.getCep());
+        }
+
+        if (input.getStreet() != null) {
+            address.setStreet(input.getStreet());
+        }
+
+        if (input.getNumber() != null) {
+            address.setNumber(input.getNumber());
+        }
+
+        if (input.getCep() != null && input.getNumber() != null) {
+            ResponseGeoCodeAPI responseGeoCodeAPI = addressService.getAddress(input.getCep(), input.getNumber());
+            address.setLatitude(responseGeoCodeAPI.getLat());
+            address.setLongitude(responseGeoCodeAPI.getLon());
+        }
+        addressRepository.save(address);
+        System.out.println(address.getNumber());
+        user.setAddress(address);
+
         userRepository.save(user);
-        return this.modelMapper.map(user, UserDTO.class);
+
+        return getUserDTO(user);
+    }
+
+    private UserDTO getUserDTO(User user) {
+        UserDTO userDTO = this.modelMapper.map(user, UserDTO.class);
+
+        if (user.getAddress() != null) {
+            userDTO.setCep(user.getAddress().getCep());
+            userDTO.setStreet(user.getAddress().getStreet());
+            userDTO.setPoints(requestService.getPoints(user.getId()));
+            userDTO.setNumber(user.getAddress().getNumber());
+        }
+
+        return userDTO;
     }
 
     public String disableUser() {
