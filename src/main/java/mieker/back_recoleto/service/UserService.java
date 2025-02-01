@@ -79,6 +79,14 @@ public class UserService {
             user.setName(input.getName());
         }
 
+        if (input.getLastName() != null) {
+            user.setLastName(input.getLastName());
+        }
+
+        if (input.getPhone() != null) {
+            user.setPhone(input.getPhone());
+        }
+
         Address address = user.getAddress();
 
         if (input.getCep() != null) {

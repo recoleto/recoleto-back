@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class UpdateCompanyDTO {
     private String name;
+    private String phone;
     private String email;
     private String cep;
     private String street;
