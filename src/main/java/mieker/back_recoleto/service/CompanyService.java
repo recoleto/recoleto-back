@@ -74,6 +74,10 @@ public class CompanyService {
             company.setName(input.getName());
         }
 
+        if (input.getPhone() != null) {
+            company.setPhone(input.getPhone());
+        }
+
         Address address = company.getAddress();
 
         if (input.getCep() != null) {
