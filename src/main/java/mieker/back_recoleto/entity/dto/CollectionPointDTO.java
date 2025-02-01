@@ -15,7 +15,7 @@ public class CollectionPointDTO {
     private String number;
     private String latitude;
     private String longitude;
-    private UrbanSolidWasteEnum urbanSolidWasteEnum;
+    private UrbanSolidWasteEnum urbanSolidWaste;
     private String companyName;
     private UUID companyUUID;
 }
