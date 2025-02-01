@@ -42,7 +42,7 @@ public class AddressService {
             return responseGeoCodeAPI; // Retorna latitude e longitude
         } else {
             System.out.println("No results found.");
-            throw new NotFoundException("Nenhum resultado encontrado");
+            throw new NotFoundException("Endereço não encontrado.");
         }
     }
 
