@@ -8,6 +8,7 @@ import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.UserRepository;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,7 +72,7 @@ public class UserService {
     }
 
 
-    public UserDTO updateUser(UpdateUserDTO input) {
+    public UserDTO updateUser(UpdateUserDTO input) throws BadRequestException {
         UUID userId = this.getUserId();
         User user = userRepository.findUserById(userId);
 

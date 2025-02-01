@@ -5,6 +5,7 @@ import mieker.back_recoleto.entity.dto.LoginDTO;
 import mieker.back_recoleto.entity.dto.LoginResponseDTO;
 import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.service.AuthenticationService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,13 @@ public class AuthController {
     }
 
     @PostMapping("/user/sign-up")
-    public ResponseEntity<String> userRegister (@RequestBody UserRegisterDTO input) throws LoginException {
+    public ResponseEntity<String> userRegister (@RequestBody UserRegisterDTO input) throws LoginException, BadRequestException {
         String message = authService.userSignUp(input);
         return ResponseEntity.status(201).body(message);
     }
 
     @PostMapping("/company/sign-up")
-    public ResponseEntity<String> companyRegister (@RequestBody CompanyRegisterDTO input) throws LoginException {
+    public ResponseEntity<String> companyRegister (@RequestBody CompanyRegisterDTO input) throws LoginException, BadRequestException {
         String message = authService.companySignUp(input);
         return ResponseEntity.status(201).body(message);
     }

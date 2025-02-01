@@ -3,6 +3,7 @@ package mieker.back_recoleto.controller;
 import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
 import mieker.back_recoleto.service.UserService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,7 +46,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('USUARIO')")
     @PutMapping("/update")
-    public ResponseEntity<UserDTO> updateUser (@RequestBody UpdateUserDTO input) {
+    public ResponseEntity<UserDTO> updateUser (@RequestBody UpdateUserDTO input) throws BadRequestException {
         return ResponseEntity.status(200).body(userService.updateUser(input));
     }
 

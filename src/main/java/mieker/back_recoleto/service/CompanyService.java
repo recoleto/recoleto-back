@@ -9,6 +9,7 @@ import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,7 +67,7 @@ public class CompanyService {
                 .toList(); // Use `collect(Collectors.toList())` for older Java versions
     }
 
-    public CompanyDTO updateCompany(UpdateCompanyDTO input) {
+    public CompanyDTO updateCompany(UpdateCompanyDTO input) throws BadRequestException {
         UUID userId = this.getCompanyId();
         Company company = companyRepository.findCompanyById(userId);
 

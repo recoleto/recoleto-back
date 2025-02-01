@@ -5,6 +5,7 @@ import mieker.back_recoleto.entity.dto.UpdateCompanyDTO;
 import mieker.back_recoleto.entity.dto.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.UserDTO;
 import mieker.back_recoleto.service.CompanyService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class CompanyController {
 
     @PreAuthorize("hasAuthority('EMPRESA')")
     @PutMapping("/update")
-    public ResponseEntity<CompanyDTO> updateCompany (@RequestBody UpdateCompanyDTO input) {
+    public ResponseEntity<CompanyDTO> updateCompany (@RequestBody UpdateCompanyDTO input) throws BadRequestException {
         return ResponseEntity.status(200).body(companyService.updateCompany(input));
     }
 
