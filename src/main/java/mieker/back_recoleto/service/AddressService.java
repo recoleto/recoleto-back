@@ -87,7 +87,11 @@ public class AddressService {
     private ResponseViaCepAPI turnCepToStreet(String cep) {
         String urlViaCep = cep + "/json";
         ResponseViaCepAPI response = this.fetchAddressDataFromViaCEP(urlViaCep);
-        assert response != null;
+//        System.out.println("Response: " + response); // Debug
+        if (response.getCep() == null) {
+            throw new NotFoundException("CEP não encontrado.");
+        }
+//        assert response != null;
         response.setLocalidade(response.getLocalidade().replace(" ", "+").toLowerCase());
         response.setLogradouro(response.getLogradouro().replace(" ", "+").toLowerCase());
         return response;
