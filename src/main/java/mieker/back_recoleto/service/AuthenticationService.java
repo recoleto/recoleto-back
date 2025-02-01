@@ -13,6 +13,7 @@ import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.AddressRepository;
 import mieker.back_recoleto.repository.CompanyRepository;
 import mieker.back_recoleto.repository.UserRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,7 +43,7 @@ public class AuthenticationService {
         this.addressService = addressService;
     }
 
-    public String userSignUp (UserRegisterDTO input) {
+    public String userSignUp (UserRegisterDTO input) throws BadRequestException {
 
         if (userRepository.existsByEmail(input.getEmail()) || companyRepository.existsByEmail(input.getEmail())) {
 //            throw new LoginException(addressService.getAddress(input.getCep(), input.getNumber()));
@@ -131,7 +132,7 @@ public class AuthenticationService {
         return loginResponseDTO;
     }
 
-    public String companySignUp(CompanyRegisterDTO input) throws LoginException {
+    public String companySignUp(CompanyRegisterDTO input) throws LoginException, BadRequestException {
         if (companyRepository.existsByEmail(input.getEmail()) || userRepository.existsByEmail(input.getEmail())) {
             throw new LoginException("Email já cadastrado.");
         }

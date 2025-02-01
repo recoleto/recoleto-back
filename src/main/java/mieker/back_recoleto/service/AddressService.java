@@ -3,6 +3,7 @@ package mieker.back_recoleto.service;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
 import mieker.back_recoleto.entity.response.ResponseViaCepAPI;
 import mieker.back_recoleto.exception.NotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,7 +20,7 @@ public class AddressService {
     @Value("${api-key}")
     private String apiKey;
 
-    private ResponseGeoCodeAPI turnStreetToGeocode(String cep, String num) {
+    private ResponseGeoCodeAPI turnStreetToGeocode(String cep, String num) throws BadRequestException {
         ResponseViaCepAPI cepAPI = this.turnCepToStreet(cep);
 //        String urlGeocode = URLEncoder.encode(street + ", " + num, StandardCharsets.UTF_8);
         String urlGeocode = "?street=";
@@ -84,8 +85,11 @@ public class AddressService {
 
 
 
-    private ResponseViaCepAPI turnCepToStreet(String cep) {
+    private ResponseViaCepAPI turnCepToStreet(String cep) throws BadRequestException {
         String urlViaCep = cep + "/json";
+        if (cep.length() != 8) {
+            throw new BadRequestException("CEP inválido.");
+        }
         ResponseViaCepAPI response = this.fetchAddressDataFromViaCEP(urlViaCep);
 //        System.out.println("Response: " + response); // Debug
         if (response.getCep() == null) {
@@ -107,7 +111,7 @@ public class AddressService {
                 .block();
     }
 
-    public ResponseGeoCodeAPI getAddress(String cep, String num) {
+    public ResponseGeoCodeAPI getAddress(String cep, String num) throws BadRequestException {
         System.out.println(cep);
 //        this.turnStreetToGeocode(cep, num);
         return this.turnStreetToGeocode(cep, num);
