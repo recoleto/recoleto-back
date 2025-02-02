@@ -119,6 +119,9 @@ public class RequestService {
     public String createRequest(RequestCreateDTO input, UUID pointId) {
         User user = userRepository.findUserById(appConfig.userAuthenticator());
         CollectionPoint point = pointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+        if (!point.getStatus()) {
+            throw new DataIntegrityViolationException("Este ponto de coleta está desativado.");
+        }
         Long lastRequestNumber = reqRepository.findLastNumber();
         long newRequestNumber = (lastRequestNumber == null) ? 1L : lastRequestNumber + 1;
 
