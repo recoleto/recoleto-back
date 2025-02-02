@@ -1,10 +1,10 @@
 package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.entity.Enum.Role;
-import mieker.back_recoleto.entity.dto.CompanyRegisterDTO;
-import mieker.back_recoleto.entity.dto.LoginDTO;
-import mieker.back_recoleto.entity.dto.LoginResponseDTO;
-import mieker.back_recoleto.entity.dto.UserRegisterDTO;
+import mieker.back_recoleto.entity.dto.company.CompanyRegisterDTO;
+import mieker.back_recoleto.entity.dto.login.LoginDTO;
+import mieker.back_recoleto.entity.dto.login.LoginResponseDTO;
+import mieker.back_recoleto.entity.dto.user.UserRegisterDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.model.User;

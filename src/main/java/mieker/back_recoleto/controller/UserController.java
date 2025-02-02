@@ -1,7 +1,7 @@
 package mieker.back_recoleto.controller;
 
-import mieker.back_recoleto.entity.dto.UpdateUserDTO;
-import mieker.back_recoleto.entity.dto.UserDTO;
+import mieker.back_recoleto.entity.dto.user.UpdateUserDTO;
+import mieker.back_recoleto.entity.dto.user.UserDTO;
 import mieker.back_recoleto.service.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
@@ -50,10 +50,16 @@ public class UserController {
         return ResponseEntity.status(200).body(userService.updateUser(input));
     }
 
-    @PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('USUARIO')")
     @PutMapping("/disable")
     public ResponseEntity<String> disableUser () {
-        return ResponseEntity.status(200).body(userService.disableUser());
+        return ResponseEntity.status(200).body(userService.disableUser(null));
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/admin/disable/{userId}")
+    public ResponseEntity<String> disableUser (@PathVariable UUID userId) {
+        return ResponseEntity.status(200).body(userService.disableUser(userId));
     }
 
 }

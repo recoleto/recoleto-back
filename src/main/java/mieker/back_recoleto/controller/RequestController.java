@@ -3,12 +3,9 @@ package mieker.back_recoleto.controller;
 
 import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.Enum.Role;
-import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
-import mieker.back_recoleto.entity.dto.RequestCreateDTO;
-import mieker.back_recoleto.entity.dto.RequestDTO;
-import mieker.back_recoleto.entity.dto.UpdateRequestDTO;
+import mieker.back_recoleto.entity.dto.request.RequestCreateDTO;
+import mieker.back_recoleto.entity.dto.request.RequestDTO;
 import mieker.back_recoleto.service.RequestService;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

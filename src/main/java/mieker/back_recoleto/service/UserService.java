@@ -1,8 +1,8 @@
 package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
-import mieker.back_recoleto.entity.dto.UpdateUserDTO;
-import mieker.back_recoleto.entity.dto.UserDTO;
+import mieker.back_recoleto.entity.dto.user.UpdateUserDTO;
+import mieker.back_recoleto.entity.dto.user.UserDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
@@ -129,11 +129,27 @@ public class UserService {
         return userDTO;
     }
 
-    public String disableUser() {
-        UUID userId = this.getUserId();
+    public String disableUser(UUID userId) {
+        if (userId == null) {
+            userId = this.getUserId();
+        }
         User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        String uniqueSuffix = UUID.randomUUID().toString().replace("-", "").substring(0, 8); // Generates a short unique string
+
+        user.setName("[desativado]");
+        user.setLastName("[desativado]");
+        user.setEmail("desativado_" + uniqueSuffix + "@example.com"); // Unique deactivated email
+        user.setPassword("[desativado]");
+        user.setAddress(null);
+        user.setPhone(null);
+        user.setCpf("xxx" + uniqueSuffix); // Unique deactivated CPF
         user.setStatus(false);
+
         userRepository.save(user);
-        return "Usuário foi desativado. Para reativar a conta entre em contato com o Administrador. \nEmail: admin@recoleto.com";
+        return "Usuário foi desativado com sucesso";
     }
 }

@@ -3,8 +3,8 @@ package mieker.back_recoleto.service;
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.Enum.Role;
-import mieker.back_recoleto.entity.dto.RequestCreateDTO;
-import mieker.back_recoleto.entity.dto.RequestDTO;
+import mieker.back_recoleto.entity.dto.request.RequestCreateDTO;
+import mieker.back_recoleto.entity.dto.request.RequestDTO;
 import mieker.back_recoleto.entity.model.*;
 import mieker.back_recoleto.exception.NotAuthorized;
 import mieker.back_recoleto.exception.NotFoundException;
@@ -119,6 +119,9 @@ public class RequestService {
     public String createRequest(RequestCreateDTO input, UUID pointId) {
         User user = userRepository.findUserById(appConfig.userAuthenticator());
         CollectionPoint point = pointRepository.findById(pointId).orElseThrow(() -> new NotFoundException("Ponto de coleta não encontrado."));
+        if (!point.getStatus()) {
+            throw new DataIntegrityViolationException("Este ponto de coleta está desativado.");
+        }
         Long lastRequestNumber = reqRepository.findLastNumber();
         long newRequestNumber = (lastRequestNumber == null) ? 1L : lastRequestNumber + 1;
 

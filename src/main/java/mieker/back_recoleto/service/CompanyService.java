@@ -1,9 +1,8 @@
 package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
-import mieker.back_recoleto.entity.dto.CompanyDTO;
-import mieker.back_recoleto.entity.dto.UpdateCompanyDTO;
-import mieker.back_recoleto.entity.dto.UserDTO;
+import mieker.back_recoleto.entity.dto.company.CompanyDTO;
+import mieker.back_recoleto.entity.dto.company.UpdateCompanyDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;

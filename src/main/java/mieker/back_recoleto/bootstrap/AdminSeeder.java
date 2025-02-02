@@ -1,7 +1,6 @@
 package mieker.back_recoleto.bootstrap;
 
 import mieker.back_recoleto.entity.Enum.Role;
-import mieker.back_recoleto.entity.dto.UserRegisterDTO;
 import mieker.back_recoleto.entity.model.User;
 import mieker.back_recoleto.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
