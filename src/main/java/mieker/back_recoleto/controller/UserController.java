@@ -50,10 +50,16 @@ public class UserController {
         return ResponseEntity.status(200).body(userService.updateUser(input));
     }
 
-    @PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('USUARIO')")
     @PutMapping("/disable")
     public ResponseEntity<String> disableUser () {
-        return ResponseEntity.status(200).body(userService.disableUser());
+        return ResponseEntity.status(200).body(userService.disableUser(null));
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/admin/disable/{userId}")
+    public ResponseEntity<String> disableUser (@PathVariable UUID userId) {
+        return ResponseEntity.status(200).body(userService.disableUser(userId));
     }
 
 }

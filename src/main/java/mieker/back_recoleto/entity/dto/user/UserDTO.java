@@ -3,9 +3,11 @@ package mieker.back_recoleto.entity.dto.user;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class UserDTO {
+    private UUID id;
     private String name;
     private String lastName;
     private Integer points;
