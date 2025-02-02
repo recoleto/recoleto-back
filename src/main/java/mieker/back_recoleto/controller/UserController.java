@@ -1,7 +1,7 @@
 package mieker.back_recoleto.controller;
 
-import mieker.back_recoleto.entity.dto.UpdateUserDTO;
-import mieker.back_recoleto.entity.dto.UserDTO;
+import mieker.back_recoleto.entity.dto.user.UpdateUserDTO;
+import mieker.back_recoleto.entity.dto.user.UserDTO;
 import mieker.back_recoleto.service.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;

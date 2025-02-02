@@ -1,9 +1,8 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.request;
 
 import lombok.Data;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class RequestCreateDTO {

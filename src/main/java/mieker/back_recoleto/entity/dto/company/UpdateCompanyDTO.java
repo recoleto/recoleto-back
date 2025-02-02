@@ -1,11 +1,10 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.company;
 
 import lombok.Data;
 
 @Data
-public class UpdateUserDTO {
+public class UpdateCompanyDTO {
     private String name;
-    private String lastName;
     private String phone;
     private String email;
     private String cep;

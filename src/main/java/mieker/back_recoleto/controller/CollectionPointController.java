@@ -2,8 +2,8 @@ package mieker.back_recoleto.controller;
 
 
 import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
-import mieker.back_recoleto.entity.dto.CollectionPointCreateDTO;
-import mieker.back_recoleto.entity.dto.CollectionPointDTO;
+import mieker.back_recoleto.entity.dto.collectionPoint.CollectionPointCreateDTO;
+import mieker.back_recoleto.entity.dto.collectionPoint.CollectionPointDTO;
 import mieker.back_recoleto.service.CollectionPointService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;

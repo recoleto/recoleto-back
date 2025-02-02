@@ -1,9 +1,7 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.request;
 
 import lombok.Data;
 import mieker.back_recoleto.entity.Enum.RequestStatus;
-
-import java.util.UUID;
 
 @Data
 public class UpdateRequestDTO {

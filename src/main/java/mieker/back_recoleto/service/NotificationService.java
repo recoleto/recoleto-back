@@ -2,11 +2,8 @@ package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.RequestStatus;
-import mieker.back_recoleto.entity.dto.NotificationDTO;
-import mieker.back_recoleto.entity.model.CollectionPoint;
-import mieker.back_recoleto.entity.model.Company;
+import mieker.back_recoleto.entity.dto.notification.NotificationDTO;
 import mieker.back_recoleto.entity.model.Notification;
-import mieker.back_recoleto.entity.model.Request;
 import mieker.back_recoleto.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,10 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.notification;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import mieker.back_recoleto.entity.Enum.RequestStatus;
 import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data

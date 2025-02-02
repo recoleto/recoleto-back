@@ -1,4 +1,4 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.urbanSolidWaste;
 
 import lombok.Data;
 

@@ -1,14 +1,13 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.user;
 
 import lombok.Data;
 
 @Data
-public class CompanyRegisterDTO {
+public class UpdateUserDTO {
     private String name;
-    private String email;
-    private String cnpj;
-    private String password;
+    private String lastName;
     private String phone;
+    private String email;
     private String cep;
     private String street;
     private String number;

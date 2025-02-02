@@ -1,11 +1,10 @@
 package mieker.back_recoleto.service;
 
-import ch.qos.logback.classic.spi.IThrowableProxy;
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
-import mieker.back_recoleto.entity.dto.UrbanSolidWasteCreateDTO;
-import mieker.back_recoleto.entity.dto.UrbanSolidWasteDTO;
-import mieker.back_recoleto.entity.dto.UrbanSolidWasteUpdateDTO;
+import mieker.back_recoleto.entity.dto.urbanSolidWaste.UrbanSolidWasteCreateDTO;
+import mieker.back_recoleto.entity.dto.urbanSolidWaste.UrbanSolidWasteDTO;
+import mieker.back_recoleto.entity.dto.urbanSolidWaste.UrbanSolidWasteUpdateDTO;
 import mieker.back_recoleto.entity.model.UrbanSolidWaste;
 import mieker.back_recoleto.exception.NotFoundException;
 import mieker.back_recoleto.repository.UrbanSolidWasteRepository;

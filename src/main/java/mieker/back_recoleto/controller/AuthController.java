@@ -1,9 +1,9 @@
 package mieker.back_recoleto.controller;
 
-import mieker.back_recoleto.entity.dto.CompanyRegisterDTO;
-import mieker.back_recoleto.entity.dto.LoginDTO;
-import mieker.back_recoleto.entity.dto.LoginResponseDTO;
-import mieker.back_recoleto.entity.dto.UserRegisterDTO;
+import mieker.back_recoleto.entity.dto.company.CompanyRegisterDTO;
+import mieker.back_recoleto.entity.dto.login.LoginDTO;
+import mieker.back_recoleto.entity.dto.login.LoginResponseDTO;
+import mieker.back_recoleto.entity.dto.user.UserRegisterDTO;
 import mieker.back_recoleto.service.AuthenticationService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;

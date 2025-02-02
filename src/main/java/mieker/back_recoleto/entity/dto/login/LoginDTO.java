@@ -1,4 +1,4 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.login;
 
 import lombok.Data;
 

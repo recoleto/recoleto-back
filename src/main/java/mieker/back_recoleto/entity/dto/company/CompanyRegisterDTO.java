@@ -1,17 +1,15 @@
-package mieker.back_recoleto.entity.dto;
+package mieker.back_recoleto.entity.dto.company;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class CompanyDTO {
+public class CompanyRegisterDTO {
     private String name;
     private String email;
-    private String phone;
     private String cnpj;
+    private String password;
+    private String phone;
     private String cep;
     private String street;
     private String number;
-    private Date createdAt;
 }
