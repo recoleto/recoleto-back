@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class RequestService {
@@ -26,8 +25,9 @@ public class RequestService {
     private final OrderRepository orderRepository;
     private final UrbanSolidWasteRepository wasteRepository;
     private final CompanyRepository companyRepository;
+    private final NotificationRepository notificationRepository;
 
-    public RequestService(RequestRepository reqRepository, ApplicationConfiguration appConfig, UserRepository userRepository, CollectionPointRepository pointRepository, OrderRepository orderRepository, UrbanSolidWasteRepository wasteRepository, CompanyRepository companyRepository) {
+    public RequestService(RequestRepository reqRepository, ApplicationConfiguration appConfig, UserRepository userRepository, CollectionPointRepository pointRepository, OrderRepository orderRepository, UrbanSolidWasteRepository wasteRepository, CompanyRepository companyRepository, NotificationRepository notificationRepository) {
         this.reqRepository = reqRepository;
         this.appConfig = appConfig;
         this.userRepository = userRepository;
@@ -35,6 +35,7 @@ public class RequestService {
         this.orderRepository = orderRepository;
         this.wasteRepository = wasteRepository;
         this.companyRepository = companyRepository;
+        this.notificationRepository = notificationRepository;
     }
     protected Integer getPoints(UUID userId) {
         // Default to the authenticated user if no userId is provided
@@ -137,6 +138,7 @@ public class RequestService {
 
         reqRepository.save(request);
 
+        int totalPoints = 0;
         // Itere sobre a lista de resíduos
         for (RequestCreateDTO.WasteDTO wasteDTO : input.getWaste()) {
             // Crie uma instância de Waste (entidade) para cada resíduo
@@ -148,9 +150,21 @@ public class RequestService {
             order.setQuantity(wasteDTO.getQuantity());
             order.setRequest(request); // Relacione com a ordem
             order.setNumber(request.getNumber()); // Relacione com o número do pedido
+            totalPoints += usw.getPoints() * wasteDTO.getQuantity(); // Calcule o total de pontos
             // Salve o resíduo no banco
             orderRepository.save(order);
         }
+
+        // 🚀 Criar e salvar a notificação no banco
+        Notification notification = new Notification();
+        notification.setCompany(point.getCompany());
+        notification.setUser(user);
+//        System.out.println("Pontos: " + totalPoints);
+        notification.setPoints(totalPoints);
+        notification.setRequestNumber(request.getNumber());
+        notification.setRequest(request);
+        notification.setStatus(RequestStatus.PENDENTE);
+        notificationRepository.save(notification);
 
         return "Pedido de descarte solicitado com sucesso!";
     }
@@ -203,7 +217,7 @@ public class RequestService {
         if (request.getStatus().equals(RequestStatus.RECEBIDO) ||
                 request.getStatus().equals(RequestStatus.CANCELADO) ||
                 request.getStatus().equals(RequestStatus.REPROVADO)) {
-            throw new DataIntegrityViolationException("Este pedido de descarte não pode ser alterado.");
+            throw new DataIntegrityViolationException("Este pedido de descarte não pode ser mais alterado.");
         }
 
         if (status.equals(RequestStatus.RECEBIDO) && role.equals(Role.USUARIO) ||
@@ -219,6 +233,26 @@ public class RequestService {
 //        empresa pode aceitar (aprovado) ou recusar (recusado), dps de aprovado ou é (recebido) ou (cancelado)
         request.setStatus(status);
         reqRepository.save(request);
+
+        List<Notification> newNotification = notificationRepository.findByRequestId(requestId);
+        int totalPoints;
+        if (newNotification.isEmpty()) {
+            totalPoints = 0;
+        } else {
+            Notification newNotif = newNotification.get(0);
+            totalPoints = newNotif.getPoints();
+        }
+        // 🚀 Criar e salvar a notificação no banco
+        Notification notification = new Notification();
+        notification.setCompany(request.getPoint().getCompany());
+        notification.setUser(request.getUser());
+//        System.out.println("Pontos: " + totalPoints);
+        notification.setPoints(totalPoints);
+        notification.setRequestNumber(request.getNumber());
+        notification.setRequest(request);
+        notification.setStatus(status);
+        notificationRepository.save(notification);
+
         return this.mapRequestToDTO(request);
     }
 
