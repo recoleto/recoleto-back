@@ -1,6 +1,7 @@
 package mieker.back_recoleto.service;
 
 import mieker.back_recoleto.config.ApplicationConfiguration;
+import mieker.back_recoleto.entity.dto.login.PasswordDTO;
 import mieker.back_recoleto.entity.dto.user.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.user.UserDTO;
 import mieker.back_recoleto.entity.model.Address;
@@ -11,6 +12,7 @@ import mieker.back_recoleto.repository.UserRepository;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -151,5 +153,16 @@ public class UserService {
 
         userRepository.save(user);
         return "Usuário foi desativado com sucesso";
+    }
+
+    public String updatePassword(PasswordDTO passwordDTO) {
+        UUID userId = this.getUserId();
+        User user = userRepository.findUserById(userId);
+        if (!passwordEncoder.matches(passwordDTO.getPassword(), user.getPassword())) {
+            throw new DataIntegrityViolationException("Senha incorreta");
+        }
+        user.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
+        userRepository.save(user);
+        return "Senha atualizada com sucesso";
     }
 }

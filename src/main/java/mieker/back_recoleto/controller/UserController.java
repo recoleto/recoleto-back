@@ -1,5 +1,6 @@
 package mieker.back_recoleto.controller;
 
+import mieker.back_recoleto.entity.dto.login.PasswordDTO;
 import mieker.back_recoleto.entity.dto.user.UpdateUserDTO;
 import mieker.back_recoleto.entity.dto.user.UserDTO;
 import mieker.back_recoleto.service.UserService;
@@ -60,6 +61,12 @@ public class UserController {
     @PutMapping("/admin/disable/{userId}")
     public ResponseEntity<String> disableUser (@PathVariable UUID userId) {
         return ResponseEntity.status(200).body(userService.disableUser(userId));
+    }
+
+    @PreAuthorize("hasAuthority('USUARIO') or hasAuthority('ADMIN')")
+    @PutMapping("/update/password")
+    public ResponseEntity<String> updatePassword (@RequestBody PasswordDTO passwordDTO) {
+        return ResponseEntity.status(200).body(userService.updatePassword(passwordDTO));
     }
 
 }
