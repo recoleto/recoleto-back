@@ -2,15 +2,16 @@ package mieker.back_recoleto.entity.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import mieker.back_recoleto.entity.Enum.UrbanSolidWasteEnum;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.UUID;
 
-
 @Data
 @Entity
+@NoArgsConstructor // Adiciona um construtor sem argumentos necessário para o Hibernate
 @Table(name = "tb_urban_solid_waste")
 public class UrbanSolidWaste {
     @Id
@@ -31,7 +32,15 @@ public class UrbanSolidWaste {
     @Column(name = "usw_created_by", nullable = false)
     private UUID createdBy;
 
-    @Column(name = "usw_created_at", nullable = false)
+    @Column(name = "usw_created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Date createdAt;
+
+    // Construtor correto
+    public UrbanSolidWaste(String name, UrbanSolidWasteEnum type, int points, UUID createdBy) {
+        this.name = name;
+        this.type = type;
+        this.points = points;
+        this.createdBy = createdBy;
+    }
 }
