@@ -2,6 +2,7 @@ package mieker.back_recoleto.controller;
 
 import mieker.back_recoleto.entity.dto.company.CompanyDTO;
 import mieker.back_recoleto.entity.dto.company.UpdateCompanyDTO;
+import mieker.back_recoleto.entity.dto.login.PasswordDTO;
 import mieker.back_recoleto.service.CompanyService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,12 @@ public class CompanyController {
     @PutMapping("/disable")
     public ResponseEntity<String> disableCompany () {
         return ResponseEntity.status(200).body(companyService.disableCompany());
+    }
+
+    @PreAuthorize("hasAuthority('EMPRESA')")
+    @PutMapping("/update/password")
+    public ResponseEntity<String> updatePassword (@RequestBody PasswordDTO passwordDTO) {
+        return ResponseEntity.status(200).body(companyService.updatePassword(passwordDTO));
     }
 
 }

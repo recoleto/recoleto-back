@@ -3,6 +3,7 @@ package mieker.back_recoleto.service;
 import mieker.back_recoleto.config.ApplicationConfiguration;
 import mieker.back_recoleto.entity.dto.company.CompanyDTO;
 import mieker.back_recoleto.entity.dto.company.UpdateCompanyDTO;
+import mieker.back_recoleto.entity.dto.login.PasswordDTO;
 import mieker.back_recoleto.entity.model.Address;
 import mieker.back_recoleto.entity.model.Company;
 import mieker.back_recoleto.entity.response.ResponseGeoCodeAPI;
@@ -11,6 +12,7 @@ import mieker.back_recoleto.repository.CompanyRepository;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -124,5 +126,16 @@ public class CompanyService {
         company.setStatus(false);
         companyRepository.save(company);
         return "Empresa foi desativada. Para reativar a conta entre em contato com o Administrador. \nEmail: admin@recoleto.com";
+    }
+
+    public String updatePassword(PasswordDTO passwordDTO) {
+        UUID companyId = this.getCompanyId();
+        Company company = companyRepository.findCompanyById(companyId);
+        if (!passwordEncoder.matches(passwordDTO.getPassword(), company.getPassword())) {
+            throw new DataIntegrityViolationException("Senha incorreta");
+        }
+        company.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
+        companyRepository.save(company);
+        return "Senha atualizada com sucesso";
     }
 }
