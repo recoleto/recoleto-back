@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@NoArgsConstructor // Adiciona um construtor sem argumentos necessário para o Hibernate
+@NoArgsConstructor
 @Table(name = "tb_urban_solid_waste")
 public class UrbanSolidWaste {
     @Id
@@ -36,7 +36,6 @@ public class UrbanSolidWaste {
     @CreationTimestamp
     private Date createdAt;
 
-    // Construtor correto
     public UrbanSolidWaste(String name, UrbanSolidWasteEnum type, int points, UUID createdBy) {
         this.name = name;
         this.type = type;

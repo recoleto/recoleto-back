@@ -31,7 +31,7 @@ public class UrbanSolidWasteSeeder implements ApplicationListener<ContextRefresh
     private void createUSW() {
         Optional<User> userOptional = userRepository.findByEmail("admin@gmail.com");
         if (userOptional.isEmpty()) {
-            System.out.println("Admin user not found. Skipping UrbanSolidWasteSeeder.");
+            System.out.println("Usuario admin não encontrado");
             return;
         }
 
